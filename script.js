@@ -481,7 +481,7 @@ const stages = [
     image: "ここに商品メモキャラ",
     supportImage: "ここに試作メモイラスト",
     memo: "商品開発は完成からではなく、方向、組み合わせ、次に見ることから始めます。",
-    support: "商品開発メモの入口です。朝食向け、コーヒーに合う、手土産向けなど、目的から試作を小さく決めます。",
+    support: "商品開発メモの入口です。味だけでなく、売る時の説明や食べ方まで見て、試作を小さく決めます。",
     questions: [
       {
         text: "コーヒーに合う商品を考える時、合いそうな方向は？",
@@ -559,7 +559,7 @@ const stages = [
         {
           id: "coffee",
           type: "builder",
-          navLabel: "ミッション1：コーヒーに合う",
+          navLabel: "ミッション1",
           title: "コーヒーに合うスコーンを組み立てよう",
           brief: "ベース・具材・香り・仕上げを1つずつ選ぶと、試作メモができます。",
           angleNote: "香ばしさと深みでコーヒーに合わせます。会計時は「コーヒーに合います」の一言で提案できます。",
@@ -606,7 +606,7 @@ const stages = [
         {
           id: "serving",
           type: "cards",
-          navLabel: "ミッション2：食べ方案内",
+          navLabel: "ミッション2",
           title: "おいしい食べ方を案内する",
           brief: "お客さんに渡す時、家でもおいしく食べてもらうための説明を考えます。",
           angleNote: "保存状態が変われば、おすすめの食べ方も変わります。",
@@ -968,7 +968,7 @@ function renderMissionStage(stage) {
   if (chosen === total) {
     showMissionReaction(mission);
     nextButton.classList.remove("is-hidden");
-    nextButton.textContent = mission.type === "cards" ? "この案内でOK" : "今日の試作メモへ";
+    nextButton.textContent = mission.type === "cards" ? "この食べ方で案内する" : "今日の試作メモへ";
   }
 }
 
@@ -1236,10 +1236,10 @@ function drawMatchLines() {
     const x2 = rightRect.left - boardRect.left + rightRect.width / 2;
     const y2 = rightRect.top - boardRect.top;
 
-    let stroke = "#174f49";
+    let stroke = "rgba(255, 255, 255, 0.55)";
     if (matchChecked) {
       const isCorrect = match.left[leftIndex].key === match.right[rightIndex].key;
-      stroke = isCorrect ? "#22776f" : "#d8874a";
+      stroke = isCorrect ? "#ffffff" : "#8a93a8";
     }
 
     const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
