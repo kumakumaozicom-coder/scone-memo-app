@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>スコーンのしくみメモ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-copy">
+      <p class="eyebrow">カードで覚える小さな学習アプリ</p>
+      <h1>スコーンのしくみメモ</h1>
+      <p class="lead">
+        材料、工程、失敗、味づくりをステージで確認します。正解を当てるより、見る順番を覚えるための画面です。
+      </p>
+    </div>
+    <div class="character-bubble hero-placeholder">
+      <svg class="char-mascot" viewBox="0 0 100 100" role="img" aria-label="スコーン職人のくまキャラ">
+        <circle cx="27" cy="28" r="12" fill="#c7a274"></circle>
+        <circle cx="73" cy="28" r="12" fill="#c7a274"></circle>
+        <circle cx="27" cy="28" r="6" fill="#f3e6d0"></circle>
+        <circle cx="73" cy="28" r="6" fill="#f3e6d0"></circle>
+        <circle cx="50" cy="52" r="32" fill="#d9b98a"></circle>
+        <path d="M28 34 Q28 10 50 10 Q72 10 72 34 Q72 24 50 24 Q28 24 28 34 Z" fill="#ffffff" stroke="#e3d7c8" stroke-width="2"></path>
+        <rect x="30" y="28" width="40" height="10" rx="5" fill="#ffffff" stroke="#e3d7c8" stroke-width="2"></rect>
+        <circle cx="32" cy="58" r="5" fill="#f2b8c6" opacity="0.7"></circle>
+        <circle cx="68" cy="58" r="5" fill="#f2b8c6" opacity="0.7"></circle>
+        <path d="M38 48 q4 -6 8 0" stroke="#2b2722" stroke-width="3" fill="none" stroke-linecap="round"></path>
+        <path d="M54 48 q4 -6 8 0" stroke="#2b2722" stroke-width="3" fill="none" stroke-linecap="round"></path>
+        <ellipse cx="50" cy="62" rx="14" ry="10" fill="#f3e6d0"></ellipse>
+        <circle cx="50" cy="58" r="2.4" fill="#5b4636"></circle>
+        <path d="M42 66 q8 6 16 0" stroke="#5b4636" stroke-width="2.4" fill="none" stroke-linecap="round"></path>
+        <ellipse cx="70" cy="82" rx="10" ry="8" fill="#c7a274"></ellipse>
+        <path d="M62 80 L78 80 L70 66 Z" fill="#e8c896" stroke="#b98f5e" stroke-width="1.5" stroke-linejoin="round"></path>
+        <circle cx="67" cy="76" r="1.6" fill="#a84c62"></circle>
+        <circle cx="73" cy="74" r="1.6" fill="#a84c62"></circle>
+      </svg>
+      <span class="char-label">スコーン案内キャラ</span>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="stage-map" aria-labelledby="stage-map-title">
+      <div class="section-title">
+        <p class="eyebrow">Stage list</p>
+        <h2 id="stage-map-title">ステージ一覧</h2>
+        <p>現場で見る順番を、短いミッションで覚えます。</p>
+      </div>
+      <div class="stage-list" id="stageList"></div>
+    </section>
+
+    <section class="lesson-area" aria-live="polite">
+      <div class="lesson-top">
+        <div>
+          <p class="stage-label" id="stageLabel"></p>
+          <h2 id="stageTitle"></h2>
+          <p class="progress-text" id="progressText"></p>
+        </div>
+        <div class="character-bubble character-frame" id="stageImageText">
+          <svg class="char-mascot" viewBox="0 0 100 100" role="img" aria-label="スコーン職人のくまキャラ">
+            <circle cx="27" cy="28" r="12" fill="#c7a274"></circle>
+            <circle cx="73" cy="28" r="12" fill="#c7a274"></circle>
+            <circle cx="27" cy="28" r="6" fill="#f3e6d0"></circle>
+            <circle cx="73" cy="28" r="6" fill="#f3e6d0"></circle>
+            <circle cx="50" cy="52" r="32" fill="#d9b98a"></circle>
+            <path d="M28 34 Q28 10 50 10 Q72 10 72 34 Q72 24 50 24 Q28 24 28 34 Z" fill="#ffffff" stroke="#e3d7c8" stroke-width="2"></path>
+            <rect x="30" y="28" width="40" height="10" rx="5" fill="#ffffff" stroke="#e3d7c8" stroke-width="2"></rect>
+            <circle cx="32" cy="58" r="5" fill="#f2b8c6" opacity="0.7"></circle>
+            <circle cx="68" cy="58" r="5" fill="#f2b8c6" opacity="0.7"></circle>
+            <path d="M38 48 q4 -6 8 0" stroke="#2b2722" stroke-width="3" fill="none" stroke-linecap="round"></path>
+            <path d="M54 48 q4 -6 8 0" stroke="#2b2722" stroke-width="3" fill="none" stroke-linecap="round"></path>
+            <ellipse cx="50" cy="62" rx="14" ry="10" fill="#f3e6d0"></ellipse>
+            <circle cx="50" cy="58" r="2.4" fill="#5b4636"></circle>
+            <path d="M42 66 q8 6 16 0" stroke="#5b4636" stroke-width="2.4" fill="none" stroke-linecap="round"></path>
+            <ellipse cx="70" cy="82" rx="10" ry="8" fill="#c7a274"></ellipse>
+            <path d="M62 80 L78 80 L70 66 Z" fill="#e8c896" stroke="#b98f5e" stroke-width="1.5" stroke-linejoin="round"></path>
+            <circle cx="67" cy="76" r="1.6" fill="#a84c62"></circle>
+            <circle cx="73" cy="74" r="1.6" fill="#a84c62"></circle>
+          </svg>
+          <span class="char-label" id="stageImageLabel">材料キャラ</span>
+        </div>
+      </div>
+
+      <div class="progress-bar" aria-hidden="true" id="progressBarWrap">
+        <span id="progressBar"></span>
+      </div>
+
+      <article class="question-panel" id="questionPanel">
+        <p class="question-kicker" id="missionLabel">ミッション</p>
+        <h3 id="questionText"></h3>
+        <p class="question-hint" id="questionHint"></p>
+      </article>
+
+      <div class="mission-nav" id="missionNav"></div>
+
+      <div class="choice-list" id="choiceList" aria-label="選択肢"></div>
+
+      <div class="match-panel is-hidden" id="matchPanel">
+        <p class="match-lead" id="matchLead"></p>
+        <div class="match-board">
+          <div class="match-row match-row--top" id="matchTopRow"></div>
+          <svg class="match-lines" id="matchLines" aria-hidden="true"></svg>
+          <div class="match-row match-row--bottom" id="matchBottomRow"></div>
+        </div>
+        <div class="match-feedback is-hidden" id="matchFeedback">
+          <p class="match-feedback-line" id="matchFeedbackLine"></p>
+          <p class="match-feedback-sub" id="matchFeedbackSub"></p>
+        </div>
+      </div>
+
+      <div class="order-panel is-hidden" id="orderPanel">
+        <p class="match-lead" id="orderLead"></p>
+        <div class="order-slots" id="orderSlots"></div>
+        <div class="order-pool" id="orderPool"></div>
+        <div class="match-feedback is-hidden" id="orderFeedback">
+          <p class="match-feedback-line" id="orderFeedbackLine"></p>
+          <p class="match-feedback-sub" id="orderFeedbackSub"></p>
+        </div>
+      </div>
+
+      <article class="reaction-card is-hidden" id="reactionCard">
+        <p class="reaction-badge" id="reactionBadge"></p>
+        <h3 id="reactionTitle"></h3>
+        <p id="reactionText"></p>
+        <div class="reaction-notes">
+          <div class="point-box">
+            <p class="point-label" id="pointLabel">見るポイント</p>
+            <p id="pointText"></p>
+          </div>
+          <div class="point-box">
+            <p class="point-label" id="reactionMemoLabel">新人メモ</p>
+            <p id="reactionMemoText"></p>
+          </div>
+          <div class="point-box">
+            <p class="point-label" id="reactionNextLabel">次に試すこと</p>
+            <p id="reactionNextText"></p>
+          </div>
+        </div>
+      </article>
+
+      <div class="action-row">
+        <button class="button secondary-button" type="button" id="backButton">前へ</button>
+        <button class="button primary-button" type="button" id="checkButton">答える</button>
+        <button class="button primary-button is-hidden" type="button" id="nextButton">次へ</button>
+      </div>
+
+      <article class="complete-card is-hidden" id="completeCard">
+        <p class="reaction-badge">ステージクリア</p>
+        <h3 id="completeTitle"></h3>
+        <p id="completeText"></p>
+        <div class="point-box">
+          <p class="point-label" id="rookieMemoLabel">今日の新人メモ</p>
+          <p id="rookieMemo"></p>
+        </div>
+        <div class="point-box">
+          <p class="point-label" id="nextStageLabel">次に見るステージ</p>
+          <p id="nextStageText"></p>
+        </div>
+        <div class="complete-actions">
+          <button class="button primary-button" type="button" id="nextStageButton">次のステージへ</button>
+          <button class="button secondary-button" type="button" id="stageListButton">ステージ一覧へ戻る</button>
+          <button class="button secondary-button" type="button" id="restartStageButton">もう一度</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="support-memo" aria-labelledby="support-title" id="supportMemoSection">
+      <div>
+        <p class="eyebrow">Supplement</p>
+        <h2 id="support-title">補足メモ</h2>
+        <dl class="support-lines">
+          <div>
+            <dt>ひとことで言うと</dt>
+            <dd id="supportOneLine"></dd>
+          </div>
+          <div>
+            <dt>まず見るところ</dt>
+            <dd id="supportLook"></dd>
+          </div>
+          <div>
+            <dt>次に試すなら</dt>
+            <dd id="supportNext"></dd>
+          </div>
+        </dl>
+      </div>
+      <div class="character-bubble support-placeholder" id="supportImageText">
+        <svg class="char-mascot" viewBox="0 0 100 100" role="img" aria-label="スコーン職人のくまキャラ">
+          <circle cx="27" cy="28" r="12" fill="#c7a274"></circle>
+          <circle cx="73" cy="28" r="12" fill="#c7a274"></circle>
+          <circle cx="27" cy="28" r="6" fill="#f3e6d0"></circle>
+          <circle cx="73" cy="28" r="6" fill="#f3e6d0"></circle>
+          <circle cx="50" cy="52" r="32" fill="#d9b98a"></circle>
+          <path d="M28 34 Q28 10 50 10 Q72 10 72 34 Q72 24 50 24 Q28 24 28 34 Z" fill="#ffffff" stroke="#e3d7c8" stroke-width="2"></path>
+          <rect x="30" y="28" width="40" height="10" rx="5" fill="#ffffff" stroke="#e3d7c8" stroke-width="2"></rect>
+          <circle cx="32" cy="58" r="5" fill="#f2b8c6" opacity="0.7"></circle>
+          <circle cx="68" cy="58" r="5" fill="#f2b8c6" opacity="0.7"></circle>
+          <path d="M38 48 q4 -6 8 0" stroke="#2b2722" stroke-width="3" fill="none" stroke-linecap="round"></path>
+          <path d="M54 48 q4 -6 8 0" stroke="#2b2722" stroke-width="3" fill="none" stroke-linecap="round"></path>
+          <ellipse cx="50" cy="62" rx="14" ry="10" fill="#f3e6d0"></ellipse>
+          <circle cx="50" cy="58" r="2.4" fill="#5b4636"></circle>
+          <path d="M42 66 q8 6 16 0" stroke="#5b4636" stroke-width="2.4" fill="none" stroke-linecap="round"></path>
+          <ellipse cx="70" cy="82" rx="10" ry="8" fill="#c7a274"></ellipse>
+          <path d="M62 80 L78 80 L70 66 Z" fill="#e8c896" stroke="#b98f5e" stroke-width="1.5" stroke-linejoin="round"></path>
+          <circle cx="67" cy="76" r="1.6" fill="#a84c62"></circle>
+          <circle cx="73" cy="74" r="1.6" fill="#a84c62"></circle>
+        </svg>
+        <span class="char-label" id="supportImageLabel">補足キャラ</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>写真診断、AIチャット、レシピ自動生成、保存、ログインはありません。GitHub Pagesに置ける静的アプリです。</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
