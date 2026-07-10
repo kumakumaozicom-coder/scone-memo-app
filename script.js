@@ -669,6 +669,7 @@ function renderStageList() {
       orderSequence = [];
       orderChecked = false;
       renderApp();
+      lessonArea.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
 }
