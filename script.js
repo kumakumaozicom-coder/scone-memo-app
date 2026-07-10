@@ -56,6 +56,7 @@ const rookieMemoLabel = document.querySelector("#rookieMemoLabel");
 const nextStageLabel = document.querySelector("#nextStageLabel");
 const progressBarWrap = document.querySelector("#progressBarWrap");
 const supportMemoSection = document.querySelector("#supportMemoSection");
+const lessonArea = document.querySelector(".lesson-area");
 
 const stageDetails = {
   "粉のちがい": {
@@ -263,11 +264,11 @@ const stages = [
       steps: [
         { id: "mix", label: "液体と混ざる" },
         { id: "partial", label: "一部反応する" },
-        { id: "notFridge", label: "冷蔵中に大きく膨らむわけではない" },
         { id: "heat", label: "焼成中に温度が上がる" },
         { id: "result", label: "膨らみ方や味に影響する" }
       ],
-      poolOrder: ["result", "mix", "heat", "partial", "notFridge"]
+      poolOrder: ["result", "mix", "heat", "partial"],
+      note: "※冷蔵中は見た目では大きく膨らみません"
     }
   },
   {
@@ -878,6 +879,7 @@ function goNext() {
     selectedChoices.clear();
     answered = false;
     renderApp();
+    lessonArea.scrollIntoView({ behavior: "smooth", block: "start" });
     return;
   }
 
@@ -890,6 +892,7 @@ function goBack() {
   selectedChoices.clear();
   answered = false;
   renderApp();
+  lessonArea.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function showComplete(stage) {
@@ -1261,27 +1264,28 @@ function checkMatch() {
 
   matchChecked = true;
   let correctCount = 0;
-  const wrongLeftLabels = [];
+  const wrongPairAnswers = [];
 
   match.left.forEach((leftItem, leftIndex) => {
     const rightItem = match.right[matchPairs[leftIndex]];
     if (rightItem && rightItem.key === leftItem.key) {
       correctCount += 1;
     } else {
-      wrongLeftLabels.push(leftItem.label);
+      const correctRight = match.right.find((item) => item.key === leftItem.key);
+      wrongPairAnswers.push(`${leftItem.label} → ${correctRight.label}`);
     }
   });
 
   renderMatchRows(match);
   drawMatchLines();
-  updateMatchFeedback(match, correctCount, wrongLeftLabels);
+  updateMatchFeedback(match, correctCount, wrongPairAnswers);
 
   checkButton.classList.add("is-hidden");
   nextButton.classList.remove("is-hidden");
   nextButton.textContent = "次へ";
 }
 
-function updateMatchFeedback(match, correctCount, wrongLeftLabels) {
+function updateMatchFeedback(match, correctCount, wrongPairAnswers) {
   const total = match.left.length;
   let line = "そこも見るけど、まずはここを見ます";
   if (correctCount === total) {
@@ -1291,8 +1295,8 @@ function updateMatchFeedback(match, correctCount, wrongLeftLabels) {
   }
 
   matchFeedbackLine.textContent = line;
-  matchFeedbackSub.textContent = wrongLeftLabels.length
-    ? `${correctCount}/${total} 正解 ・ 見直す：${wrongLeftLabels.join("、")}`
+  matchFeedbackSub.textContent = wrongPairAnswers.length
+    ? `${correctCount}/${total} 正解\n正しいつなぎ：\n${wrongPairAnswers.join("\n")}`
     : `${correctCount}/${total} 正解`;
   matchFeedback.classList.remove("is-hidden");
   matchFeedback.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -1435,7 +1439,10 @@ function checkOrder() {
   }
 
   orderFeedbackLine.textContent = line;
-  orderFeedbackSub.textContent = `${correctCount}/${total} 正解`;
+  const noteLine = order.note ? `\n${order.note}` : "";
+  orderFeedbackSub.textContent = correctCount === total
+    ? `${correctCount}/${total} 正解${noteLine}`
+    : `${correctCount}/${total} 正解\n正しい順番：\n${order.steps.map((step, index) => `${index + 1}. ${step.label}`).join("\n")}${noteLine}`;
   orderFeedback.classList.remove("is-hidden");
   orderFeedback.scrollIntoView({ behavior: "smooth", block: "center" });
   playOnce(orderFeedback, correctCount === total ? "anim-bounce" : "anim-shake");
