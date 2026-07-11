@@ -525,8 +525,8 @@ h3 {
 
 .order-slots {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 5px;
+  grid-template-columns: 1fr;
+  gap: 6px;
   margin-bottom: 14px;
 }
 
@@ -787,7 +787,8 @@ h3 {
   background: var(--cream);
 }
 
-#rookieMemo {
+#rookieMemo,
+#reactionText {
   white-space: pre-line;
 }
 
@@ -858,6 +859,10 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 14px;
   background: var(--cream);
+}
+
+#supportExtra {
+  display: contents;
 }
 
 .support-lines dt {

@@ -56,6 +56,7 @@ const rookieMemoLabel = document.querySelector("#rookieMemoLabel");
 const nextStageLabel = document.querySelector("#nextStageLabel");
 const progressBarWrap = document.querySelector("#progressBarWrap");
 const supportMemoSection = document.querySelector("#supportMemoSection");
+const supportExtra = document.querySelector("#supportExtra");
 const lessonArea = document.querySelector(".lesson-area");
 
 const stageDetails = {
@@ -77,14 +78,19 @@ const stageDetails = {
     look: "割合、水分量、折る前のまとまり。",
     next: "10％、30％、50％で水分感を比べる。"
   },
-  "BPの役割": {
-    desc: "BPが働く順番をカードで並べて覚える。",
+  "BPが働くまでの流れ": {
+    desc: "BPが混ざってから焼き上がるまでの流れを並べて覚える。",
     difficulty: "現場基礎",
     tag: "順番並べ替え",
     avatar: "BPキャラ",
     oneLine: "BPは増やせば必ず膨らむ材料ではありません。",
     look: "混ざるタイミング、焼成中の反応、膨らみ方への影響。",
-    next: "同じg数でBPの種類を替え、高さ、割れ方、苦みを焼き比べる。"
+    next: "同じg数でBPの種類を替え、高さ、割れ方、苦みを焼き比べる。",
+    extra: [
+      { dt: "BPとは", dd: "加熱と水分の両方で二酸化炭素を出す膨張剤。気泡を「作る」のがBPの役割で、その気泡を「保持する」のはグルテンとバターが作る生地の構造です。" },
+      { dt: "アルミあり／なし", dd: "アルミ入りは常温と加熱の2段階で反応します。アルミフリーは主に加熱時に反応するため、生地が傷みにくく、風味にえぐみが出にくいです。" },
+      { dt: "保存の仕方", dd: "湿気を吸うと反応が弱まります。密閉して冷暗所で保存し、開封後は早めに使い切ります。" }
+    ]
   },
   "バターの状態": {
     desc: "冷たさ、粒の残り方、横広がりの関係を覚える。",
@@ -252,20 +258,20 @@ const stages = [
     ]
   },
   {
-    title: "BPの役割",
+    title: "BPが働くまでの流れ",
     type: "order",
     image: "ここにBPキャラ",
     supportImage: "ここにふくらみイラスト",
     memo: "BPは混ぜた時と焼成中に働きます。\n冷蔵でBPが大きく膨らむわけではありません。",
     support: "BPは増やせば必ず解決する材料ではありません。反応のタイミングと焼き上がりの荒れ方も見ます。",
     order: {
-      title: "BPが働く順番を並べよう",
-      brief: "正しい順番になるようタップして並べよう",
+      title: "BPが働くまでの流れを並べよう",
+      brief: "BPが混ざってから焼き上がるまで、起こる順番にタップして並べよう",
       steps: [
-        { id: "mix", label: "液体と混ざる" },
-        { id: "partial", label: "一部反応する" },
-        { id: "heat", label: "焼成中に温度が上がる" },
-        { id: "result", label: "膨らみ方や味に影響する" }
+        { id: "mix", label: "生地の水分（液体）と混ざる" },
+        { id: "partial", label: "生地と混ざった時点で、一部のガスが出始める" },
+        { id: "heat", label: "オーブンの熱で温度が上がり、残りのガスが一気に出る" },
+        { id: "result", label: "ガスの出方しだいで、膨らみ方や味が変わる" }
       ],
       poolOrder: ["result", "mix", "heat", "partial"],
       note: "※冷蔵中は見た目では大きく膨らみません"
@@ -681,6 +687,9 @@ function renderStageHeader(stage, detail) {
   supportOneLine.textContent = detail.oneLine;
   supportLook.textContent = detail.look;
   supportNext.textContent = detail.next;
+  supportExtra.innerHTML = (detail.extra || [])
+    .map((item) => `<div><dt>${item.dt}</dt><dd>${item.dd}</dd></div>`)
+    .join("");
   supportImageLabel.textContent = stage.supportImage.replace("ここに", "").replace("イラスト", "キャラ");
 }
 
@@ -705,6 +714,7 @@ function playOnce(el, className) {
 function renderApp() {
   const stage = stages[currentStageIndex];
   renderStageList();
+  backButton.textContent = "前へ";
 
   if (stage.type === "mission") {
     renderMissionStage(stage);
@@ -819,6 +829,8 @@ function checkAnswer() {
   playOnce(stageImageText, result === "correct" ? "anim-bounce" : "anim-shake");
   checkButton.classList.add("is-hidden");
   nextButton.classList.remove("is-hidden");
+  backButton.disabled = false;
+  backButton.textContent = "選び直す";
 }
 
 function showAnswerMarks(answerSet) {
@@ -847,7 +859,10 @@ function showReaction(question, result) {
   reactionCard.className = `reaction-card is-${result}`;
   reactionBadge.textContent = labels[result][0];
   reactionTitle.textContent = labels[result][1];
-  reactionText.textContent = question.feedback[result];
+  const correctLabels = question.answers.map((index) => `「${question.choices[index]}」`).join("");
+  reactionText.textContent = result === "correct"
+    ? question.feedback[result]
+    : `${question.feedback[result]}\n正解は${correctLabels}です。`;
   pointLabel.textContent = "見るポイント";
   pointText.textContent = question.point;
   reactionMemoLabel.textContent = "新人メモ";
@@ -888,6 +903,13 @@ function goNext() {
 }
 
 function goBack() {
+  if (answered) {
+    selectedChoices.clear();
+    answered = false;
+    renderApp();
+    lessonArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
   if (currentQuestionIndex === 0) return;
   currentQuestionIndex -= 1;
   selectedChoices.clear();
