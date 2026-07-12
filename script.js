@@ -61,7 +61,7 @@ const lessonArea = document.querySelector(".lesson-area");
 
 const stageDetails = {
   "粉のちがい": {
-    desc: "粉を変えた時の香り、吸水、口どけを分けて見る。",
+    desc: "粉を変えた時の香り、吸水（水の吸い方）、口どけを分けて見る。",
     difficulty: "基礎",
     tag: "まずはここから",
     avatar: "粉キャラ",
@@ -83,12 +83,12 @@ const stageDetails = {
     difficulty: "現場基礎",
     tag: "順番並べ替え",
     avatar: "BPキャラ",
-    oneLine: "BPは増やせば必ず膨らむ材料ではありません。",
+    oneLine: "BPは増やせば増やすほど膨らむ、という材料ではありません。",
     look: "混ざるタイミング、焼成中の反応、膨らみ方への影響。",
-    next: "同じg数でBPの種類を替え、高さ、割れ方、苦みを焼き比べる。",
+    next: "同じg数でBPの種類を替え、高さ、割れ方、苦み（BPが多いと出やすい薬っぽい後味）を焼き比べる。",
     extra: [
-      { dt: "BPとは", dd: "加熱と水分の両方で二酸化炭素を出す膨張剤。気泡を「作る」のがBPの役割で、その気泡を「保持する」のはグルテンとバターが作る生地の構造です。" },
-      { dt: "アルミあり／なし", dd: "アルミ入りは常温と加熱の2段階で反応します。アルミフリーは主に加熱時に反応するため、生地が傷みにくく、風味にえぐみが出にくいです。" },
+      { dt: "BPとは", dd: "加熱と水分の両方で二酸化炭素を出す膨張剤。気泡を「作る」のがBPの役割で、その気泡を「保持する」のはグルテン（小麦のたんぱく質が作る網目）とバターが作る生地の構造です。" },
+      { dt: "アルミあり／なし", dd: "アルミ入りは、混ぜた時（常温）と加熱時の2段階でガスが出ます。アルミフリーは常温では反応しにくいため、生地を仕込んでから焼くまでの間に、ふくらむ力（ガス）が早く抜けてしまうことが少なく、風味にえぐみも出にくいです。" },
       { dt: "保存の仕方", dd: "湿気を吸うと反応が弱まります。密閉して冷暗所で保存し、開封後は早めに使い切ります。" }
     ]
   },
@@ -142,7 +142,7 @@ const stageDetails = {
     difficulty: "応用",
     tag: "試作設計",
     avatar: "商品メモ",
-    oneLine: "商品開発は完成名より、次の試作条件から始めます。",
+    oneLine: "商品開発は商品名を決めることより、次の試作で何を確かめるかから始めます。",
     look: "食べる場面、持ち運び、翌日の食感、重さ。",
     next: "ベースを1つ決め、具材を入れすぎず試す。"
   },
@@ -177,23 +177,23 @@ const stages = [
       {
         text: "全粒粉を増やすと、起きやすいことは？",
         hint: "正解寄りのカードをすべて選びます。",
-        choices: ["香りが出やすい", "水分を吸いやすい", "生地が粉々になりやすい", "必ず高さが出る"],
+        choices: ["香りが出やすい", "水分を吸いやすい", "生地が粉々になりやすい", "高さが出やすくなる"],
         answers: [0, 1, 2],
         feedback: {
           correct: "いい感じです。全粒粉は香ばしさが出る一方で、水分を吸いやすく、生地がまとまりにくくなることがあります。",
           close: "おしい！ 全粒粉は香りだけでなく、水分の吸い方も見ます。",
-          wrong: "ここは全粒粉の吸水を思い出します。必ず高さが出る、とは考えません。"
+          wrong: "ここは全粒粉の吸水を思い出します。高さはむしろ出にくくなる方向です。"
         },
         point: "香り、吸水、粉々になりやすさをセットで見ます。"
       },
       {
-        text: "準強力粉を使う時、見たいところは？",
+        text: "準強力粉（強力粉と薄力粉の中間の粉）を使う時、見たいところは？",
         hint: "食感の変化に関係するカードを選びます。",
-        choices: ["噛みごたえ", "生地の締まり", "香りだけを見る", "水分の感じ方"],
+        choices: ["噛みごたえ", "生地の締まり", "香りだけを見る", "しっとりかパサつくかの変化"],
         answers: [0, 1, 3],
         feedback: {
-          correct: "正解です。粉が強くなると、噛みごたえや締まりが出やすく、水分の感じ方も変わります。",
-          close: "おしい！ 香りだけでなく、硬さや水分感も一緒に見ます。",
+          correct: "正解です。粉が強くなると、噛みごたえや締まりが出やすく、同じ水分でもしっとり感やパサつきが変わります。",
+          close: "おしい！ 香りだけでなく、硬さやしっとり感も一緒に見ます。",
           wrong: "粉の強さは食感に出ます。香りだけで判断しないのがコツです。"
         },
         point: "粉の種類を変えたら、口どけと噛みごたえを比べます。"
@@ -201,14 +201,14 @@ const stages = [
       {
         text: "粉を比べる時、最初にやりやすい比べ方は？",
         hint: "原因を見えやすくする選び方です。",
-        choices: ["粉だけ変える", "水分も焼成も全部変える", "同じ厚みで焼く", "記録を残す"],
+        choices: ["粉だけ変える", "水分も焼成（焼く温度・時間）も全部変える", "同じ厚みで焼く", "記録を残す"],
         answers: [0, 2, 3],
         feedback: {
           correct: "正解です。1つだけ変えて、厚みをそろえて、記録を残すと違いが見えます。",
           close: "おしい！ たくさん変えると原因が見えにくくなります。",
           wrong: "試作では、一度に変える条件を少なくすると覚えやすいです。"
         },
-        point: "比較は1項目ずつ。高さ、割れ方、中心、口どけを見ます。"
+        point: "比較は1項目ずつ。高さ、割れ方、中心の火の通り具合、口どけを見ます。"
       }
     ]
   },
@@ -222,7 +222,7 @@ const stages = [
       {
         text: "全粒粉30％以上で水分が少ない時、起きやすいことは？",
         hint: "生地のまとまりに注目します。",
-        choices: ["粉々になりやすい", "折る前にまとまりにくい", "必ずふくらむ", "吸水を見直す"],
+        choices: ["粉々になりやすい", "折る前にまとまりにくい", "ふくらみやすくなる", "粉が水分を吸いきれていない"],
         answers: [0, 1, 3],
         feedback: {
           correct: "正解です。全粒粉が多くて水分が少ない時は、粉々になりやすいところを見ます。",
@@ -263,7 +263,7 @@ const stages = [
     image: "ここにBPキャラ",
     supportImage: "ここにふくらみイラスト",
     memo: "BPは混ぜた時と焼成中に働きます。\n冷蔵でBPが大きく膨らむわけではありません。",
-    support: "BPは増やせば必ず解決する材料ではありません。反応のタイミングと焼き上がりの荒れ方も見ます。",
+    support: "BPは増やせば解決する、という材料ではありません。反応のタイミングと焼き上がりの荒れ方も見ます。",
     order: {
       title: "BPが働くまでの流れを並べよう",
       brief: "BPが混ざってから焼き上がるまで、起こる順番にタップして並べよう",
@@ -287,19 +287,19 @@ const stages = [
       {
         text: "バターが溶け気味だと、起きやすいことは？",
         hint: "正解寄りのカードをすべて選びます。",
-        choices: ["横に広がりやすい", "層が出にくい", "必ずふわふわになる"],
+        choices: ["横に広がりやすい", "層が出にくい", "ふわふわに焼き上がる"],
         answers: [0, 1],
         feedback: {
           correct: "正解です。溶け気味だと横に広がりやすく、層も出にくくなります。",
           close: "おしい！ ふわふわになると決めつけず、広がりと層を見ます。",
-          wrong: "バターが溶けると、焼く前にだれて高さが出にくいことがあります。"
+          wrong: "バターが溶けると、焼く前にだれて（ゆるんで広がって）高さが出にくいことがあります。"
         },
         point: "焼く前の生地温度と、バター粒が残っているかを見ます。"
       },
       {
-        text: "横に暴れる時、まず見たいところは？",
-        hint: "生地がだれる原因を選びます。",
-        choices: ["バターの状態", "生地のゆるさ", "2番生地・側面の弱さ", "焼き色だけ"],
+        text: "横に暴れる（横に広がって形が崩れる）時、まず見たいところは？",
+        hint: "生地がだれる（ゆるんで広がる）原因を選びます。",
+        choices: ["バターの状態", "生地のゆるさ", "2番生地（抜いた残りをまとめ直した生地）・側面の弱さ", "焼き色だけ"],
         answers: [0, 1, 2],
         feedback: {
           correct: "正解です。横広がりは、バター、生地のゆるさ、2番生地や側面の弱さを順に見ます。",
@@ -330,21 +330,21 @@ const stages = [
     support: "材料変更メモの水分と生地の硬さです。水分が少ないと粉々、多いと横流れの方向で見ます。",
     questions: [
       {
-        text: "液体を入れて台に出した時、生地がまとまらない。まず見るところは？",
-        hint: "原因になりやすいカードを選びます。",
-        choices: ["水分が足りているか", "全粒粉が多くないか", "液体を入れてすぐ台に出していないか", "粉全体に水分が回っているか"],
-        answers: [0, 1, 2, 3],
+        text: "液体を入れて台に出した時、生地がまとまらない。いちばん先に見るところは？",
+        hint: "焼く前の生地の中を見ます。正解は1つです。",
+        choices: ["オーブンの温度設定", "粉全体に水分が回っているか", "仕上げにぬる卵の量", "型抜きの形"],
+        answers: [1],
         feedback: {
-          correct: "正解です。まず水分量、全粒粉、台に出すタイミング、水分の回り方を見ます。",
-          close: "おしい！ もっとこねる前に、水分が粉全体に回っているかも見ます。",
-          wrong: "生地がまとまらない時は、こねる量だけでなく、水分と粉への回り方を見ます。"
+          correct: "正解です。水分は多い少ないより、まず粉全体に回っているかを見ます。",
+          close: "おしい！ いちばん先に見るのは、生地の中の水分の回り方です。",
+          wrong: "オーブンや仕上げは、この時点ではまだ関係が薄いです。まず水分が粉全体に回っているかを見ます。"
         },
-        point: "押してもひとまとまりにならず、折り重ねる前にバラバラ崩れる状態を見ています。"
+        point: "まず水分の回り方。そのあと、水分の量・全粒粉の割合・液体を入れてすぐ台に出していないか、も原因になるので順に見ます。"
       },
       {
         text: "生地がベタつく時、起きやすいことは？",
         hint: "焼く前後の形を想像します。",
-        choices: ["横に流れやすい", "形がぼやけやすい", "必ず高さが出る", "手や台につきやすい"],
+        choices: ["横に流れやすい", "形がぼやけやすい", "高さが出やすくなる", "手や台につきやすい"],
         answers: [0, 1, 3],
         feedback: {
           correct: "正解です。ベタつく生地は横に流れやすく、形もぼやけやすいです。",
@@ -388,8 +388,8 @@ const stages = [
         { key: "cohesion", label: "水分の回り方" },
         { key: "color", label: "焼成温度" },
         { key: "height", label: "成形の厚み" },
-        { key: "layers", label: "型抜きの側面" },
-        { key: "spread", label: "バターの温度" }
+        { key: "layers", label: "バターの状態（温度）" },
+        { key: "spread", label: "型抜きの側面（塗り卵の垂れ・ひねり）" }
       ]
     }
   },
@@ -546,11 +546,11 @@ const stages = [
         { key: "thickness", label: "成形の厚み" }
       ],
       right: [
-        { key: "water", label: "生地のまとまりに関係する" },
-        { key: "thickness", label: "高さに関係する" },
+        { key: "water", label: "量と回り方で生地のまとまりが変わる" },
+        { key: "thickness", label: "薄くすると高さが出にくくなる" },
         { key: "flour", label: "水分を吸いやすい" },
-        { key: "butter", label: "層やサクサク感に関係する" },
-        { key: "bp", label: "膨らみに関係する" }
+        { key: "butter", label: "粒が残ると層とサクサク感が出る" },
+        { key: "bp", label: "量しだいで膨らみの高さが変わる" }
       ]
     }
   },
@@ -583,7 +583,7 @@ const stages = [
               key: "mix",
               label: "具材",
               options: [
-                { id: "walnut", label: "くるみ", flavor: "香ばしさと食感", caution: "刻みすぎない。油分でベタつき注意", checkpoint: "焼成後の香ばしさと油戻り" },
+                { id: "walnut", label: "くるみ", flavor: "香ばしさと食感", caution: "刻みすぎない。油分でベタつき注意", checkpoint: "焼成後の香ばしさと、油戻り（時間が経って油がにじむこと）" },
                 { id: "choco", label: "チョコチップ", flavor: "コクと甘さ", caution: "生地温度が上がると溶け崩れやすい", checkpoint: "チョコの溶け出し方" },
                 { id: "dried", label: "ドライフルーツ", flavor: "酸味とジューシーさ", caution: "水分を含み生地がゆるくなりやすい", checkpoint: "生地のベタつき" },
                 { id: "noneMix", label: "なし", flavor: "", caution: "", checkpoint: "" }
@@ -604,7 +604,7 @@ const stages = [
               label: "仕上げ",
               options: [
                 { id: "plainFinish", label: "そのまま", flavor: "素材の味を活かす", caution: "見た目が地味になりやすい", checkpoint: "焼き色と見た目" },
-                { id: "glaze", label: "グレーズ", flavor: "つやと甘さ", caution: "かけすぎるとベタつく", checkpoint: "グレーズの固まり方" },
+                { id: "glaze", label: "グレーズ（砂糖がけ）", flavor: "つやと甘さ", caution: "かけすぎるとベタつく", checkpoint: "グレーズの固まり方" },
                 { id: "sugar", label: "粉糖", flavor: "軽い甘さと見た目", caution: "湿気で溶けやすい", checkpoint: "時間経過での粉糖の状態" }
               ]
             }
@@ -903,6 +903,30 @@ function goNext() {
 }
 
 function goBack() {
+  const stage = stages[currentStageIndex];
+
+  if (stage.type === "match") {
+    if (!matchChecked) return;
+    matchSelectedLeft = null;
+    matchPairs = {};
+    matchChecked = false;
+    renderApp();
+    drawMatchLines();
+    lessonArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+
+  if (stage.type === "order") {
+    if (!orderChecked) return;
+    orderSequence = [];
+    orderChecked = false;
+    renderApp();
+    lessonArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+
+  if (stage.type === "mission") return;
+
   if (answered) {
     selectedChoices.clear();
     answered = false;
@@ -1173,6 +1197,8 @@ function renderMatchStage(stage) {
     checkButton.classList.add("is-hidden");
     nextButton.classList.remove("is-hidden");
     nextButton.textContent = "次へ";
+    backButton.disabled = false;
+    backButton.textContent = "選び直す";
   }
 }
 
@@ -1306,6 +1332,8 @@ function checkMatch() {
   checkButton.classList.add("is-hidden");
   nextButton.classList.remove("is-hidden");
   nextButton.textContent = "次へ";
+  backButton.disabled = false;
+  backButton.textContent = "選び直す";
 }
 
 function updateMatchFeedback(match, correctCount, wrongPairAnswers) {
@@ -1386,6 +1414,8 @@ function renderOrderStage(stage) {
     checkButton.classList.add("is-hidden");
     nextButton.classList.remove("is-hidden");
     nextButton.textContent = "次へ";
+    backButton.disabled = false;
+    backButton.textContent = "選び直す";
   }
 }
 
@@ -1473,6 +1503,8 @@ function checkOrder() {
   checkButton.classList.add("is-hidden");
   nextButton.classList.remove("is-hidden");
   nextButton.textContent = "次へ";
+  backButton.disabled = false;
+  backButton.textContent = "選び直す";
 }
 
 function showOrderComplete(stage) {
