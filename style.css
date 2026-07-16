@@ -431,6 +431,30 @@ h3 {
   color: #ffffff;
 }
 
+.choice-card:disabled {
+  cursor: default;
+}
+
+.verdict-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 950;
+  vertical-align: middle;
+}
+
+.verdict-tag--ok {
+  background: #ffffff;
+  color: var(--accent-dark);
+}
+
+.verdict-tag--ng {
+  background: var(--notice);
+  color: #ffffff;
+}
+
 .match-panel {
   margin-top: 8px;
 }

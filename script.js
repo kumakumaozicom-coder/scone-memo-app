@@ -131,16 +131,16 @@ const stageDetails = {
   "味の組み立て": {
     desc: "ベース、具材、香り、食感、仕上げで味を作る。",
     difficulty: "応用",
-    tag: "味づくり",
+    tag: "役割分担で味づくり",
     avatar: "味キャラ",
-    oneLine: "味は単品ではなく、役割の組み合わせです。",
+    oneLine: "味は単品ではなく、ベース・主役・香り・食感・仕上げの役割分担で作ります。",
     look: "ベース、主役、香り、食感、仕上げの強さ。",
     next: "主役を1つ決め、具材は10〜15％から試す。"
   },
   "商品開発の入口": {
-    desc: "食べる場面から、次の試作で見る点を決める。",
+    desc: "誰がどんな場面で食べるかから、試作の条件を決める。",
     difficulty: "応用",
-    tag: "試作設計",
+    tag: "お客と場面から",
     avatar: "商品メモ",
     oneLine: "商品開発は商品名を決めることより、次の試作で何を確かめるかから始めます。",
     look: "食べる場面、持ち運び、翌日の食感、重さ。",
@@ -162,7 +162,13 @@ const stageDetails = {
     avatar: "試作メモ",
     oneLine: "商品開発は、味の方向と次に見るところをセットで考えます。",
     look: "味の方向、作る時の注意、次の試作チェックポイント。",
-    next: "選んだ方向で、具材量を10〜15％から試作する。"
+    next: "選んだ方向で、具材量を10〜15％から試作する。",
+    extra: [
+      { dt: "薄力粉", dd: "たんぱく質が少なく、軽い口どけ。ふんわり・さっくり系にしやすい、初心者向けのベースです。" },
+      { dt: "中力粉", dd: "薄力粉と強力粉の中間。ほどよい歯ごたえで、しっとりめのスコーンにしやすい粉です。" },
+      { dt: "強力粉", dd: "たんぱく質が多く、噛みごたえが出る。混ぜすぎると硬くなりやすいので、さっくり混ぜます。" },
+      { dt: "全粒粉", dd: "小麦を皮ごと挽いた粉。香ばしいが水分を吸いやすく、生地がまとまりにくいので水分を多めに見ます。" }
+    ]
   }
 };
 
@@ -177,14 +183,14 @@ const stages = [
       {
         text: "全粒粉を増やすと、起きやすいことは？",
         hint: "正解寄りのカードをすべて選びます。",
-        choices: ["香りが出やすい", "水分を吸いやすい", "生地が粉々になりやすい", "高さが出やすくなる"],
+        choices: ["香りが出やすい", "水分を吸いやすい", "生地がまとまりにくくなる", "高さが出やすくなる"],
         answers: [0, 1, 2],
         feedback: {
           correct: "いい感じです。全粒粉は香ばしさが出る一方で、水分を吸いやすく、生地がまとまりにくくなることがあります。",
           close: "おしい！ 全粒粉は香りだけでなく、水分の吸い方も見ます。",
           wrong: "ここは全粒粉の吸水を思い出します。高さはむしろ出にくくなる方向です。"
         },
-        point: "香り、吸水、粉々になりやすさをセットで見ます。"
+        point: "香り、吸水、まとまりにくさをセットで見ます。"
       },
       {
         text: "準強力粉（強力粉と薄力粉の中間の粉）を使う時、見たいところは？",
@@ -222,7 +228,7 @@ const stages = [
       {
         text: "全粒粉30％以上で水分が少ない時、起きやすいことは？",
         hint: "生地のまとまりに注目します。",
-        choices: ["粉々になりやすい", "折る前にまとまりにくい", "ふくらみやすくなる", "粉が水分を吸いきれていない"],
+        choices: ["押してもまとまらずバラバラ崩れる", "折る時に生地が割れやすい", "ふくらみやすくなる", "粉が水分を吸いきれていない"],
         answers: [0, 1, 3],
         feedback: {
           correct: "正解です。全粒粉が多くて水分が少ない時は、粉々になりやすいところを見ます。",
@@ -232,7 +238,7 @@ const stages = [
         point: "全粒粉30％以上では、まとまり方と水分をセットで確認します。"
       },
       {
-        text: "全粒粉を増やした時、次に比較しやすい試作は？",
+        text: "全粒粉を増やして生地がまとまりにくくなった時、次の試作で比べやすい変更は？",
         hint: "原因を切り分けやすいカードを選びます。",
         choices: ["水分を少し増やす", "全粒粉の割合を下げる", "具材を大量に入れる", "同じ焼成で比べる"],
         answers: [0, 1, 3],
@@ -299,7 +305,7 @@ const stages = [
       {
         text: "横に暴れる（横に広がって形が崩れる）時、まず見たいところは？",
         hint: "生地がだれる（ゆるんで広がる）原因を選びます。",
-        choices: ["バターの状態", "生地のゆるさ", "2番生地（抜いた残りをまとめ直した生地）・側面の弱さ", "焼き色だけ"],
+        choices: ["バターが溶けて生地になじみすぎていないか", "形を保てないほど生地がやわらかくないか", "2番生地（抜いた残りをまとめ直した生地）や、切り口の側面がつぶれていないか", "焼き色だけを気にする"],
         answers: [0, 1, 2],
         feedback: {
           correct: "正解です。横広がりは、バター、生地のゆるさ、2番生地や側面の弱さを順に見ます。",
@@ -309,16 +315,16 @@ const stages = [
         point: "バターが溶けていないか、生地がゆるすぎないか、側面が弱くないかを確認します。"
       },
       {
-        text: "バターが溶け気味だった時、次に試しやすいことは？",
-        hint: "条件を戻すためのカードを選びます。",
-        choices: ["生地を冷やす", "作業を早くする", "同じ厚みで比べる", "水分を無限に増やす"],
-        answers: [0, 1, 2],
+        text: "バターが溶け気味だった時、生地をより良い状態に戻すには？",
+        hint: "失敗からの立て直し方を選びます。",
+        choices: ["生地を冷蔵庫で冷やし直す", "手早く作業して生地の温度を上げない", "水を足してやわらかさをごまかす", "そのまま急いで焼いてしまう"],
+        answers: [0, 1],
         feedback: {
-          correct: "正解です。冷やす、手早くする、厚みをそろえると比べやすいです。",
-          close: "おしい！ 水分を増やす前に、バターの温度を戻します。",
-          wrong: "バターの問題なら、まず冷たさと作業時間を見直します。"
+          correct: "正解です。まず冷やし直し、次からは手早く作業して温度を上げないようにします。",
+          close: "おしい！ 水でごまかしたり急いで焼いたりせず、まず温度を戻します。",
+          wrong: "溶けたバターは、水を足しても急いで焼いても戻りません。まず冷やし直します。"
         },
-        point: "溶けた時は、冷やす、手早くする、条件をそろえる。"
+        point: "立て直したら、同じ厚みで焼いて前回と比べると効果が分かります。"
       }
     ]
   },
@@ -331,8 +337,8 @@ const stages = [
     questions: [
       {
         text: "液体を入れて台に出した時、生地がまとまらない。いちばん先に見るところは？",
-        hint: "焼く前の生地の中を見ます。正解は1つです。",
-        choices: ["オーブンの温度設定", "粉全体に水分が回っているか", "仕上げにぬる卵の量", "型抜きの形"],
+        hint: "焼く前の生地の中を見ます。",
+        choices: ["オーブンの温度設定", "水分が生地全体になじんでいるか", "仕上げにぬる卵の量", "型抜きの形"],
         answers: [1],
         feedback: {
           correct: "正解です。水分は多い少ないより、まず粉全体に回っているかを見ます。",
@@ -343,27 +349,27 @@ const stages = [
       },
       {
         text: "生地がベタつく時、起きやすいことは？",
-        hint: "焼く前後の形を想像します。",
-        choices: ["横に流れやすい", "形がぼやけやすい", "高さが出やすくなる", "手や台につきやすい"],
-        answers: [0, 1, 3],
+        hint: "焼く前後の作業しやすさと形を想像します。",
+        choices: ["ベタついて手や台につき、作業しにくくなる", "焼くと横に広がって形が崩れやすい", "生地が締まって硬くなる", "高さが出やすくなる"],
+        answers: [0, 1],
         feedback: {
-          correct: "正解です。ベタつく生地は横に流れやすく、形もぼやけやすいです。",
-          close: "おしい！ 高さが出るとは決めず、流れ方を見ます。",
-          wrong: "ベタつきは水分や温度のサインです。形の出方を見ます。"
+          correct: "正解です。ベタつくと作業しにくく、焼くと横に広がって形が崩れやすいです。",
+          close: "おしい！ ベタつきで硬くはならず、作業のしにくさと横広がりが出ます。",
+          wrong: "ベタつきは水分や温度のサインです。作業のしにくさと横広がりを見ます。"
         },
         point: "ベタつく時は、水分と生地温度を確認します。"
       },
       {
-        text: "初心者が最初に目指しやすい生地の状態は？",
+        text: "初心者が最初に目指す生地の状態は？",
         hint: "扱いやすい真ん中の状態です。",
-        choices: ["粉々", "押せばまとまる", "ベタつく", "液体のように流れる"],
+        choices: ["粉っぽくバラバラ崩れる", "押すとひとつにまとまる", "手にベタベタつく", "とろりと流れる"],
         answers: [1],
         feedback: {
-          correct: "正解です。最初は押せばまとまる状態を基準にすると比べやすいです。",
-          close: "おしい！ 粉々やベタつきより、まず扱える真ん中を探します。",
-          wrong: "基準にするなら、押せばまとまる状態が分かりやすいです。"
+          correct: "正解です。押すとひとつにまとまる状態を基準にすると、多い・少ないが見えます。",
+          close: "おしい！ 崩れる・ベタつく・流れるより、まず押すとまとまる真ん中を探します。",
+          wrong: "基準にするなら、押すとひとつにまとまる状態が分かりやすいです。"
         },
-        point: "押せばまとまる状態を覚えると、少ない・多いが見えます。"
+        point: "押すとひとつにまとまる状態を覚えると、水分が少ない・多いが見えます。"
       }
     ]
   },
@@ -385,7 +391,7 @@ const stages = [
         { key: "color", label: "焼き色が弱い" }
       ],
       right: [
-        { key: "cohesion", label: "水分の回り方" },
+        { key: "cohesion", label: "生地全体に水分がなじんでいるか" },
         { key: "color", label: "焼成温度" },
         { key: "height", label: "成形の厚み" },
         { key: "layers", label: "バターの状態（温度）" },
@@ -403,7 +409,7 @@ const stages = [
       {
         text: "生地がまとまらない時、考えられる原因は？",
         hint: "まとまりに影響するものを選びます。",
-        choices: ["水分が足りていない", "全粒粉が多い", "粉全体に水分が回っていない", "仕上げの粉糖が少ない"],
+        choices: ["水分が足りていない", "全粒粉が多い", "水分が粉全体になじんでいない", "仕上げの粉糖が少ない"],
         answers: [0, 1, 2],
         feedback: {
           correct: "正解です。水分量、全粒粉、水分の回り方をまず見ます。",
@@ -413,9 +419,9 @@ const stages = [
         point: "液体を入れて台に出した時、押してもまとまらず、折る前に崩れる状態です。"
       },
       {
-        text: "まとまらない時、追加で見たい材料側の条件は？",
-        hint: "水分が入りにくくなる条件を選びます。",
-        choices: ["バターが粉に入りすぎていないか", "粉の種類や吸水が強すぎないか", "粉全体に水分が回っているか", "焼き色が強いか"],
+        text: "まとまらない時、材料側で何が起きているかもしれない？",
+        hint: "水分が入りにくくなる状態を想像します。",
+        choices: ["バターが粉に入りすぎて水分が入りにくい", "粉の吸水が強くて水分を抱え込んでいる", "水分が粉全体になじんでいない", "焼き色が強い"],
         answers: [0, 1, 2],
         feedback: {
           correct: "正解です。バターが粉に入りすぎると水分が入りにくくなることがあり、粉の吸水も影響します。",
@@ -425,7 +431,7 @@ const stages = [
         point: "水分が足りないだけでなく、粉が水分を受け取りにくい状態も確認します。"
       },
       {
-        text: "次の試作で比べやすい変更は？",
+        text: "「生地をもう少ししっとりさせたい」時、次の試作で変えやすいのは？",
         hint: "もっとこねる前に、小さく比べます。",
         choices: ["水分を少し増やす", "全粒粉を少し下げる", "液体を入れてから少し待つ", "とにかく長くこねる"],
         answers: [0, 1, 2],
@@ -442,32 +448,44 @@ const stages = [
     title: "味の組み立て",
     image: "ここに味キャラ",
     supportImage: "ここに味組み立てイラスト",
-    memo: "味はベース、具材、香り、食感、仕上げの組み合わせで考えます。",
-    support: "味を組み立てるメモです。1つの味を選ぶのではなく、方向性と組み合わせで考えます。",
+    memo: "味は「ベース・主役・香り・食感・仕上げ」の役割分担で考えます。",
+    support: "味の役割分担を学ぶステージです。単品でなく、それぞれの役割を組み合わせて味を作ります。",
     questions: [
       {
-        text: "香ばしいスコーンを考えるなら、合いそうな組み合わせは？",
-        hint: "方向性としてありのカードを選びます。",
-        choices: ["全粒粉 × くるみ × メープル", "紅茶 × オレンジピール", "チーズ × 黒こしょう", "水分を増やすだけ"],
+        text: "「香ばしい方向」にしたい時、合う組み合わせは？",
+        hint: "香ばしさを作る素材を選びます。",
+        choices: ["ごま × 黒糖", "全粒粉 × ローストアーモンド", "メープル × ペカンナッツ", "水分を増やすだけ"],
         answers: [0, 1, 2],
         feedback: {
-          correct: "正解です。味の方向は、ベース、具材、香りの組み合わせで考えます。",
+          correct: "正解です。ごま・ナッツ・全粒粉・黒糖などは香ばしさを作りやすい素材です。",
           close: "おしい！ 水分を増やすだけでは味の組み立てになりません。",
-          wrong: "味づくりでは、ベース、香り、具材、仕上げを組み合わせます。"
+          wrong: "味づくりは、香ばしさを作る素材を組み合わせます。水分量は味の方向とは別の話です。"
         },
-        point: "全粒粉、ナッツ、メープルなどは香ばしさを作りやすいです。"
+        point: "香ばしい方向は、ごま・ナッツ・全粒粉・黒糖あたりから選ぶと作りやすいです。"
       },
       {
-        text: "紅茶に合う方向を作るなら、使いやすいものは？",
-        hint: "香りが軽く出るカードを選びます。",
-        choices: ["紅茶", "レモン皮", "オレンジピール", "黒こしょうだけ大量"],
+        text: "味がぼやけないように組み立てたい。正しい進め方は？",
+        hint: "「主役を決める」考え方を選びます。",
+        choices: ["主役の具材を1つ決めて、他は脇役にする", "香りは主役に合わせて1つに絞る", "食感の違うものを少しだけ足す", "同じ強さの具材を5種類入れる"],
         answers: [0, 1, 2],
         feedback: {
-          correct: "正解です。紅茶や柑橘の香りは、紅茶に合わせやすい方向です。",
-          close: "おしい！ 香りは強くしすぎず、主役を決めます。",
-          wrong: "紅茶に合わせるなら、軽い香りから考えると組み立てやすいです。"
+          correct: "正解です。主役を1つ決め、香りを絞り、食感を少し足すとまとまります。",
+          close: "おしい！ 同じ強さの具材をたくさん入れると、味が散らかります。",
+          wrong: "主役を決めず同じ強さの具材を入れすぎると、何の味か分からなくなります。"
         },
-        point: "香りを足しすぎると散らかるので、主役を1つ決めます。"
+        point: "主役1つ＋脇役、香りは絞る、食感は少しだけ。これが役割分担の基本です。"
+      },
+      {
+        text: "相手や場面に合わせた組み立ての例として、正しいものは？",
+        hint: "誰が・いつ食べるかに合う組み合わせを選びます。",
+        choices: ["秋の手土産に → 栗 × かぼちゃ", "コーヒーに合わせて → コーヒー × チョコチップ", "子ども向けに → いちご × ミルクチョコ", "何も考えず在庫を全部入れる"],
+        answers: [0, 1, 2],
+        feedback: {
+          correct: "正解です。季節・飲み物・食べる人に合わせると、狙いのある味になります。",
+          close: "おしい！ 在庫を全部入れると、狙いのない味になります。",
+          wrong: "味の組み立ては、誰が・いつ食べるかから逆算して素材を選びます。"
+        },
+        point: "秋＝栗やかぼちゃ、コーヒー＝チョコやナッツ、子ども＝いちごやミルク、と狙いから選びます。"
       },
       {
         text: "具材を入れる時、最初の試作で見たいことは？",
@@ -487,32 +505,32 @@ const stages = [
     title: "商品開発の入口",
     image: "ここに商品メモキャラ",
     supportImage: "ここに試作メモイラスト",
-    memo: "商品開発は完成からではなく、方向、組み合わせ、次に見ることから始めます。",
-    support: "商品開発メモの入口です。味だけでなく、売る時の説明や食べ方まで見て、試作を小さく決めます。",
+    memo: "商品開発は、誰がどんな場面で食べるかを先に決めて、そこから試作の条件を決めます。",
+    support: "「お客と場面」から考えるステージです。誰が・いつ食べるかを起点に、試作で確かめる点を決めます。",
     questions: [
       {
-        text: "コーヒーに合う商品を考える時、合いそうな方向は？",
-        hint: "香ばしさや深さに合うカードを選びます。",
-        choices: ["全粒粉", "くるみ", "メープル", "何でも大量に混ぜる"],
+        text: "朝食向けのスコーンを考える時、まず確かめたいことは？",
+        hint: "朝に食べる場面を想像します。",
+        choices: ["朝でも重すぎず食べられるか", "温め直しでおいしく戻るか", "小さめで食べやすいか", "見た目の派手さだけ"],
         answers: [0, 1, 2],
         feedback: {
-          correct: "正解です。全粒粉、くるみ、メープルはコーヒーに合わせやすい方向です。",
-          close: "おしい！ 方向はよいですが、入れすぎには注意します。",
-          wrong: "コーヒー向けは、香ばしさと重さのバランスを見ます。"
+          correct: "正解です。朝食向けは、重さ・温め直し・食べやすい大きさを見ます。",
+          close: "おしい！ 見た目の派手さより、朝に食べやすいかを先に見ます。",
+          wrong: "朝食向けは、重さや大きさなど「朝に食べる場面」から確かめます。"
         },
-        point: "香ばしさを出すと重くなりやすいので、水分と焼成を見ます。"
+        point: "同じ味でも、朝食向けは軽さと食べやすい大きさを優先します。"
       },
       {
-        text: "次の試作で最初にやるとよいことは？",
-        hint: "入口として小さく決めるカードを選びます。",
-        choices: ["ベースを1つ決める", "具材を入れすぎない", "確認するポイントを書く", "完成品名だけ決める"],
+        text: "手土産向けで大事にすることは？",
+        hint: "渡す・持ち帰る場面を想像します。",
+        choices: ["持ち運びで崩れにくいか", "翌日でもおいしい食感か", "渡した時の見た目", "焼きたてのことしか考えない"],
         answers: [0, 1, 2],
         feedback: {
-          correct: "正解です。ベース、具材量、見るポイントを決めると試作が進めやすいです。",
-          close: "おしい！ 名前よりも、まず何を試すかを決めます。",
-          wrong: "商品開発の入口では、試作で確認することを小さく決めます。"
+          correct: "正解です。手土産は、崩れにくさ・翌日の食感・見た目まで考えます。",
+          close: "おしい！ 焼きたてだけでなく、渡す・持ち帰る場面まで見ます。",
+          wrong: "手土産は食べるのが後日。崩れにくさや翌日の食感まで含めて考えます。"
         },
-        point: "まずはベースを1つ決めて、具材を入れすぎないところから試します。"
+        point: "手土産は「渡してから食べるまで」の時間を想像して条件を決めます。"
       },
       {
         text: "商品開発で見るのは、味だけですか？",
@@ -533,7 +551,7 @@ const stages = [
     type: "match",
     image: "ここにつなぎキャラ",
     supportImage: "ここにつなぎイラスト",
-    memo: "材料は単体で見るより、働きとつなげて覚えます。\n高さが出ない時も、BPだけで決めません。",
+    memo: "材料は単体でなく、働きとつなげて覚えます。\nバターは量より「すり込みすぎず粒を大きめに残す」ことが層とサクサク感の決め手。膨らみはBPだけでなく生地の状態も関わります。",
     support: "線でつなぐ練習ステージです。材料と、生地・焼き上がりへの働きを結びます。",
     match: {
       title: "材料と働きをつなぐ",
@@ -546,11 +564,11 @@ const stages = [
         { key: "thickness", label: "成形の厚み" }
       ],
       right: [
-        { key: "water", label: "量と回り方で生地のまとまりが変わる" },
+        { key: "water", label: "水分が全体になじむと生地がまとまる" },
         { key: "thickness", label: "薄くすると高さが出にくくなる" },
-        { key: "flour", label: "水分を吸いやすい" },
-        { key: "butter", label: "粒が残ると層とサクサク感が出る" },
-        { key: "bp", label: "量しだいで膨らみの高さが変わる" }
+        { key: "flour", label: "挽き方が粗いほど水分を吸いやすい" },
+        { key: "butter", label: "すり込みすぎず粒を大きめに残すと層が出る" },
+        { key: "bp", label: "量と生地の状態の両方で膨らみが決まる" }
       ]
     }
   },
@@ -573,10 +591,12 @@ const stages = [
           categories: [
             {
               key: "base",
-              label: "ベース",
+              label: "ベース（粉）",
               options: [
-                { id: "wheat", label: "全粒粉", flavor: "香ばしさ", caution: "水分を吸いやすく生地がまとまりにくい", checkpoint: "生地の硬さと吸水" },
-                { id: "plain", label: "薄力粉", flavor: "軽い口どけ", caution: "まとまりやすいが物足りなさが出ることがある", checkpoint: "口どけと軽さ" }
+                { id: "plain", label: "薄力粉", flavor: "軽い口どけ", caution: "まとまりやすいが物足りなさが出ることがある", checkpoint: "口どけと軽さ" },
+                { id: "medium", label: "中力粉", flavor: "ほどよい歯ごたえとしっとり感", caution: "混ぜすぎると重くなりやすい", checkpoint: "歯ごたえとしっとり感" },
+                { id: "strong", label: "強力粉", flavor: "しっかりした噛みごたえ", caution: "混ぜすぎると硬くなりやすい", checkpoint: "硬さと噛みごたえ" },
+                { id: "wheat", label: "全粒粉", flavor: "香ばしさ", caution: "水分を吸いやすく生地がまとまりにくい", checkpoint: "生地の硬さと吸水" }
               ]
             },
             {
@@ -585,7 +605,10 @@ const stages = [
               options: [
                 { id: "walnut", label: "くるみ", flavor: "香ばしさと食感", caution: "刻みすぎない。油分でベタつき注意", checkpoint: "焼成後の香ばしさと、油戻り（時間が経って油がにじむこと）" },
                 { id: "choco", label: "チョコチップ", flavor: "コクと甘さ", caution: "生地温度が上がると溶け崩れやすい", checkpoint: "チョコの溶け出し方" },
-                { id: "dried", label: "ドライフルーツ", flavor: "酸味とジューシーさ", caution: "水分を含み生地がゆるくなりやすい", checkpoint: "生地のベタつき" },
+                { id: "raisin", label: "レーズン", flavor: "自然な甘みと酸味", caution: "水分を含み生地がゆるくなりやすい", checkpoint: "生地のベタつき" },
+                { id: "cheese", label: "チェダーチーズ", flavor: "塩気とコク", caution: "焼成中に溶け出て広がりやすい", checkpoint: "チーズの溶け出し方と焼き色" },
+                { id: "blueberry", label: "冷凍ブルーベリー", flavor: "みずみずしい甘酸っぱさ", caution: "凍ったまま入れる。つぶすと色移りする", checkpoint: "生地の水っぽさと色移り" },
+                { id: "cranberry", label: "ドライクランベリー", flavor: "甘酸っぱさと彩り", caution: "乾きすぎは前もって湯でもどす", checkpoint: "食感とパサつき" },
                 { id: "noneMix", label: "なし", flavor: "", caution: "", checkpoint: "" }
               ]
             },
@@ -596,6 +619,8 @@ const stages = [
                 { id: "maple", label: "メープル", flavor: "深み", caution: "入れすぎると甘さが強くなる", checkpoint: "甘さと香りのバランス" },
                 { id: "cinnamon", label: "シナモン", flavor: "スパイスの香り", caution: "香りを足しすぎない", checkpoint: "香りの強さ" },
                 { id: "vanilla", label: "バニラ", flavor: "やさしい甘さ", caution: "風味が単調になりやすい", checkpoint: "味の輪郭" },
+                { id: "earlgrey", label: "紅茶（アールグレイ）", flavor: "華やかな香り", caution: "茶葉は細かくして入れる", checkpoint: "香りの出方と舌ざわり" },
+                { id: "lemon", label: "レモンの皮", flavor: "さわやかな酸味の香り", caution: "白い部分は苦いので黄色だけ", checkpoint: "香りの立ち方" },
                 { id: "noneAroma", label: "なし", flavor: "", caution: "", checkpoint: "" }
               ]
             },
@@ -618,11 +643,11 @@ const stages = [
           brief: "お客さんに渡す時、家でもおいしく食べてもらうための説明を考えます。",
           angleNote: "保存状態が変われば、おすすめの食べ方も変わります。",
           cards: [
-            { id: "today", label: "当日", direction: "そのまま、または軽く温めるのがおすすめです。", caution: "温めすぎるとしっとりが強く出ます。", checkpoint: "香りと食感、温めすぎていないか。" },
-            { id: "nextDay", label: "翌日", direction: "トースターで軽く温めるとサクッと感が戻ります。", caution: "温めが足りないと生地が締まった印象になります。", checkpoint: "外側のサクッと感が戻っているか。" },
-            { id: "frozen", label: "冷凍後", direction: "自然解凍してからトースターで温めるのがおすすめです。", caution: "凍ったまま加熱すると中が生っぽく残ることがあります。", checkpoint: "解凍具合と中心の温まり方。" },
-            { id: "microwaveOnly", label: "レンジだけ", direction: "しっとり仕上がりますが、表面のサクッと感は戻りにくいです。", caution: "温めすぎると生地がべたつくことがあります。", checkpoint: "しっとり感と表面のバランス。" },
-            { id: "fridge", label: "冷蔵保存", direction: "生地が締まりやすいので、食べる前の温め直しを案内します。", caution: "冷たいまま出すと硬さが目立ちます。", checkpoint: "温め直しの案内を伝えたか。" }
+            { id: "today", label: "当日", direction: "「今日中でしたら、そのままでもおいしいです。少し温めると、外はサクッ・中はふんわりしますよ」", caution: "温めすぎるとしっとりが強く出ます。", checkpoint: "香りと食感、温めすぎていないか。" },
+            { id: "nextDay", label: "翌日", direction: "「明日召し上がるなら、トースターで2〜3分温めてください。外側のサクッと感が戻ります」", caution: "温めが足りないと生地が締まった印象になります。", checkpoint: "外側のサクッと感が戻っているか。" },
+            { id: "frozen", label: "冷凍する時", direction: "「冷凍もできます。食べる前に自然解凍してから、トースターで温めてください。凍ったまま焼くと中が冷たいままになりやすいです」", caution: "凍ったまま加熱すると中が生っぽく残ることがあります。", checkpoint: "解凍具合と中心の温まり方。" },
+            { id: "microwaveOnly", label: "レンジだけの時", direction: "「レンジだけなら、しっとり食べたい時向けです。ただ、表面のサクッと感は戻りにくいので、そこはご了承ください」", caution: "温めすぎると生地がべたつくことがあります。", checkpoint: "しっとり感と表面のバランス。" },
+            { id: "fridge", label: "冷蔵した時", direction: "「冷蔵すると生地が締まって少し硬くなります。食べる前に軽く温め直すと、ふんわり感が戻りますよ」", caution: "冷たいまま出すと硬さが目立ちます。", checkpoint: "温め直しの案内を伝えたか。" }
           ]
         }
       ]
@@ -762,7 +787,7 @@ function renderQuizStage(stage) {
 
   missionLabel.textContent = `ミッション ${currentQuestionIndex + 1}`;
   questionText.textContent = `ミッション：${question.text}`;
-  questionHint.textContent = question.hint;
+  questionHint.textContent = `${question.hint}（正解は${question.answers.length}つです）`;
   renderChoices(question);
 }
 
@@ -834,17 +859,26 @@ function checkAnswer() {
 }
 
 function showAnswerMarks(answerSet) {
-  choiceList.querySelectorAll(".choice-card").forEach((button) => {
-    const choiceIndex = Number(button.dataset.choice);
+  const stage = stages[currentStageIndex];
+  const question = stage.questions[currentQuestionIndex];
 
-    if (answerSet.has(choiceIndex)) {
-      button.classList.add("is-correct");
-    }
-
-    if (selectedChoices.has(choiceIndex) && !answerSet.has(choiceIndex)) {
-      button.classList.add("is-wrong");
-    }
-  });
+  choiceList.innerHTML = question.choices.map((choice, index) => {
+    const isCorrect = answerSet.has(index);
+    const isWrongPick = selectedChoices.has(index) && !isCorrect;
+    const cls = isCorrect ? "is-correct" : isWrongPick ? "is-wrong" : "";
+    const mark = isCorrect ? "✓" : isWrongPick ? "×" : index + 1;
+    const tag = isCorrect
+      ? '<span class="verdict-tag verdict-tag--ok">正解</span>'
+      : isWrongPick
+        ? '<span class="verdict-tag verdict-tag--ng">不正解</span>'
+        : "";
+    return `
+      <button class="choice-card ${cls}" type="button" data-choice="${index}" disabled>
+        <span class="choice-mark">${mark}</span>
+        <span>${choice}${tag}</span>
+      </button>
+    `;
+  }).join("");
 }
 
 function showReaction(question, result) {
@@ -1205,28 +1239,33 @@ function renderMatchStage(stage) {
 function renderMatchRows(match) {
   matchTopRow.innerHTML = match.left.map((item, index) => {
     const classes = ["match-card"];
+    let label = item.label;
     if (matchSelectedLeft === index) classes.push("is-selected");
     if (matchPairs[index] !== undefined) classes.push("is-linked");
     if (matchChecked) {
       const rightItem = match.right[matchPairs[index]];
-      classes.push(rightItem && rightItem.key === item.key ? "is-correct" : "is-wrong");
+      const good = rightItem && rightItem.key === item.key;
+      classes.push(good ? "is-correct" : "is-wrong");
+      label = (good ? "✓ " : "× ") + label;
     }
-    return `<button type="button" class="${classes.join(" ")}" data-left="${index}" ${matchChecked ? "disabled" : ""}>${item.label}</button>`;
+    return `<button type="button" class="${classes.join(" ")}" data-left="${index}" ${matchChecked ? "disabled" : ""}>${label}</button>`;
   }).join("");
 
   const linkedRightIndexes = new Set(Object.values(matchPairs));
 
   matchBottomRow.innerHTML = match.right.map((item, index) => {
     const classes = ["match-card"];
+    let label = item.label;
     if (linkedRightIndexes.has(index)) classes.push("is-linked");
     if (matchChecked) {
       const pairedLeftIndex = Object.keys(matchPairs).find((key) => matchPairs[key] === index);
       if (pairedLeftIndex !== undefined) {
-        const leftItem = match.left[Number(pairedLeftIndex)];
-        classes.push(leftItem.key === item.key ? "is-correct" : "is-wrong");
+        const good = match.left[Number(pairedLeftIndex)].key === item.key;
+        classes.push(good ? "is-correct" : "is-wrong");
+        label = (good ? "✓ " : "× ") + label;
       }
     }
-    return `<button type="button" class="${classes.join(" ")}" data-right="${index}" ${matchChecked ? "disabled" : ""}>${item.label}</button>`;
+    return `<button type="button" class="${classes.join(" ")}" data-right="${index}" ${matchChecked ? "disabled" : ""}>${label}</button>`;
   }).join("");
 
   matchTopRow.querySelectorAll(".match-card").forEach((button) => {
@@ -1425,10 +1464,12 @@ function renderOrderBoard(order) {
     const step = order.steps.find((s) => s.id === stepId);
     const classes = ["match-card"];
     if (!step) classes.push("is-empty");
+    let label = step ? step.label : String(index + 1);
     if (orderChecked && step) {
-      classes.push(order.steps[index].id === stepId ? "is-correct" : "is-wrong");
+      const good = order.steps[index].id === stepId;
+      classes.push(good ? "is-correct" : "is-wrong");
+      label = (good ? "✓ " : "× ") + label;
     }
-    const label = step ? step.label : String(index + 1);
     const disabled = orderChecked || !step;
     return `<button type="button" class="${classes.join(" ")}" data-slot="${index}" ${disabled ? "disabled" : ""}>${label}</button>`;
   }).join("");
