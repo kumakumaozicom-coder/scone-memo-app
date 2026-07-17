@@ -594,8 +594,14 @@ h3 {
 
 .builder-option.is-selected {
   border-color: var(--accent);
-  background: #ffffff;
-  color: var(--accent-dark);
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(13, 59, 120, 0.28);
+}
+
+.builder-option.is-selected::before {
+  content: "✓ ";
+  font-weight: 950;
 }
 
 .mission-nav {
