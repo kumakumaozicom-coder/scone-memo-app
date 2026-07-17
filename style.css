@@ -604,6 +604,18 @@ h3 {
   font-weight: 950;
 }
 
+.builder-option.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.builder-limit {
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
 .mission-nav {
   display: flex;
   flex-wrap: wrap;

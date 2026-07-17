@@ -601,7 +601,9 @@ const stages = [
             },
             {
               key: "mix",
-              label: "具材",
+              label: "具材（2つまで選べます）",
+              multi: true,
+              maxSelect: 2,
               options: [
                 { id: "walnut", label: "くるみ", tags: ["roast", "nutty"], flavor: "香ばしさと食感", caution: "刻みすぎない。油分でベタつき注意", checkpoint: "焼成後の香ばしさと、油戻り（時間が経って油がにじむこと）" },
                 { id: "choco", label: "チョコチップ", tags: ["sweet", "choco"], flavor: "コクと甘さ", caution: "生地温度が上がると溶け崩れやすい", checkpoint: "チョコの溶け出し方" },
@@ -1170,13 +1172,21 @@ function renderMissionCards(mission) {
 
 function renderMissionCategories(mission) {
   choiceList.innerHTML = mission.categories.map((category) => {
+    const selected = missionSelections[category.key];
+    const selectedArr = category.multi ? (Array.isArray(selected) ? selected : []) : [];
+    const atMax = category.multi && selectedArr.length >= category.maxSelect;
     const optionsHtml = category.options.map((option) => {
-      const isSelected = missionSelections[category.key] === option.id;
-      return `<button type="button" class="builder-option ${isSelected ? "is-selected" : ""}" data-category="${category.key}" data-option="${option.id}">${option.label}</button>`;
+      const isSelected = category.multi ? selectedArr.includes(option.id) : selected === option.id;
+      const isNone = option.id.startsWith("none");
+      const disabled = category.multi && atMax && !isSelected && !isNone;
+      return `<button type="button" class="builder-option ${isSelected ? "is-selected" : ""} ${disabled ? "is-disabled" : ""}" data-category="${category.key}" data-option="${option.id}" ${disabled ? "disabled" : ""}>${option.label}</button>`;
     }).join("");
+    const hint = category.multi
+      ? `<span class="builder-limit">${selectedArr.length}/${category.maxSelect} 選択中</span>`
+      : "";
     return `
       <div class="builder-category">
-        <p class="builder-category-label">${category.label}</p>
+        <p class="builder-category-label">${category.label}${hint}</p>
         <div class="builder-options">${optionsHtml}</div>
       </div>
     `;
@@ -1184,10 +1194,34 @@ function renderMissionCategories(mission) {
 
   choiceList.querySelectorAll(".builder-option").forEach((button) => {
     button.addEventListener("click", () => {
-      missionSelections[button.dataset.category] = button.dataset.option;
+      const key = button.dataset.category;
+      const optId = button.dataset.option;
+      const category = mission.categories.find((c) => c.key === key);
+      if (category.multi) {
+        toggleMultiSelection(category, optId);
+      } else {
+        missionSelections[key] = optId;
+      }
       renderApp();
     });
   });
+}
+
+function toggleMultiSelection(category, optId) {
+  const arr = Array.isArray(missionSelections[category.key]) ? [...missionSelections[category.key]] : [];
+  const isNone = optId.startsWith("none");
+  if (isNone) {
+    // 「なし」を選ぶと具材選択をリセットして「なし」だけにする
+    missionSelections[category.key] = arr.includes(optId) ? [] : [optId];
+    return;
+  }
+  // 実素材を選ぶ時は「なし」を外す
+  const withoutNone = arr.filter((id) => !id.startsWith("none"));
+  if (withoutNone.includes(optId)) {
+    missionSelections[category.key] = withoutNone.filter((id) => id !== optId);
+  } else if (withoutNone.length < category.maxSelect) {
+    missionSelections[category.key] = [...withoutNone, optId];
+  }
 }
 
 function getMissionProgress(mission) {
@@ -1195,37 +1229,53 @@ function getMissionProgress(mission) {
     return { chosen: missionSelections.card ? 1 : 0, total: 1 };
   }
   const total = mission.categories.length;
-  const chosen = mission.categories.filter((category) => missionSelections[category.key] !== undefined).length;
+  const chosen = mission.categories.filter((category) => {
+    const sel = missionSelections[category.key];
+    return category.multi ? Array.isArray(sel) && sel.length > 0 : sel !== undefined;
+  }).length;
   return { chosen, total };
 }
 
 function getMissionSelectedOptions(mission) {
-  return mission.categories
-    .map((category) => category.options.find((option) => option.id === missionSelections[category.key]))
-    .filter(Boolean);
+  const result = [];
+  mission.categories.forEach((category) => {
+    const sel = missionSelections[category.key];
+    if (category.multi) {
+      (Array.isArray(sel) ? sel : []).forEach((id) => {
+        const opt = category.options.find((o) => o.id === id);
+        if (opt) result.push(opt);
+      });
+    } else {
+      const opt = category.options.find((o) => o.id === sel);
+      if (opt) result.push(opt);
+    }
+  });
+  return result;
 }
 
-// 代表的な鉄板組み合わせ（順にチェックし、最初に一致したものを採用）
+// 代表的な鉄板組み合わせ（ctx: {base, aroma, finish, hasMix(id)}）
 const signatureCombos = [
-  { when: (b, m, a) => b.id === "wheat" && m.id === "walnut" && a.id === "maple",
+  { when: (c) => c.hasMix("strawberry") && c.hasMix("bacon"),
+    text: "甘じょっぱの王道。いちごの甘酸っぱさとベーコンの塩気が引き立て合います。", scene: "breakfast" },
+  { when: (c) => c.base.id === "wheat" && c.hasMix("walnut") && c.aroma.id === "maple",
     text: "香ばしさの黄金比。全粒粉のコクに、くるみとメープルが重なる王道です。", scene: "coffee" },
-  { when: (b, m, a, f) => m.id === "bacon" && (a.id === "maple" || f.id === "mapleicing"),
+  { when: (c) => c.hasMix("bacon") && (c.aroma.id === "maple" || c.finish.id === "mapleicing"),
     text: "甘じょっぱの海外定番。ベーコンの塩気にメープルの甘さが重なる、鉄板の組み合わせです。", scene: "breakfast" },
-  { when: (b, m, a) => m.id === "anko" && a.id === "matcha",
+  { when: (c) => c.hasMix("anko") && c.aroma.id === "matcha",
     text: "和の鉄板。抹茶のほろ苦さに、あんこのやさしい甘さがよく合います。", scene: "gift" },
-  { when: (b, m, a) => m.id === "whitechoco" && a.id === "matcha",
+  { when: (c) => c.hasMix("whitechoco") && c.aroma.id === "matcha",
     text: "抹茶ホワイトチョコの定番。ほろ苦さとミルキーな甘さのバランスが人気です。", scene: "gift" },
-  { when: (b, m, a) => m.id === "cranberry" && a.id === "orange",
+  { when: (c) => c.hasMix("cranberry") && c.aroma.id === "orange",
     text: "クランベリーオレンジ。甘酸っぱさと柑橘の香りが軽やかに重なります。", scene: "tea" },
-  { when: (b, m, a) => m.id === "blueberry" && a.id === "lemon",
+  { when: (c) => c.hasMix("blueberry") && c.aroma.id === "lemon",
     text: "ブルーベリーレモン。さわやかな甘酸っぱさで、ブランチにも合います。", scene: "tea" },
-  { when: (b, m, a) => m.id === "pecan" && a.id === "maple",
+  { when: (c) => c.hasMix("pecan") && c.aroma.id === "maple",
     text: "ピーカンメープル。やわらかな香ばしさに、甘い香りが重なる王道です。", scene: "coffee" },
-  { when: (b, m, a) => m.id === "raisin" && a.id === "rum",
+  { when: (c) => c.hasMix("raisin") && c.aroma.id === "rum",
     text: "ラムレーズン。大人の深い香りが漂う、洋菓子の定番です。", scene: "adult" },
-  { when: (b, m, a) => m.id === "strawberry" && a.id === "vanilla",
+  { when: (c) => c.hasMix("strawberry") && c.aroma.id === "vanilla",
     text: "いちごミルク風。甘酸っぱさとやさしい甘い香りで、お子さまにも人気です。", scene: "kids" },
-  { when: (b, m, a) => m.id === "sweetpotato" && a.id === "cinnamon",
+  { when: (c) => c.hasMix("sweetpotato") && c.aroma.id === "cinnamon",
     text: "さつまいもシナモン。秋らしいほくほくの甘さに、あたたかいスパイスが合います。", scene: "gift" }
 ];
 
@@ -1252,26 +1302,45 @@ function detectScene(tags) {
 }
 
 function evaluateBuilder(mission) {
-  const opts = mission.categories.map((cat) =>
-    cat.options.find((o) => o.id === missionSelections[cat.key]));
-  const [base, mix, aroma, finish] = opts;
-  const tags = new Set();
-  opts.forEach((o) => (o && o.tags ? o.tags : []).forEach((t) => tags.add(t)));
+  const bySingle = (key) => {
+    const cat = mission.categories.find((c) => c.key === key);
+    return cat.options.find((o) => o.id === missionSelections[key]);
+  };
+  const base = bySingle("base");
+  const aroma = bySingle("aroma");
+  const finish = bySingle("finish");
+  const mixCat = mission.categories.find((c) => c.key === "mix");
+  const mixIds = Array.isArray(missionSelections.mix) ? missionSelections.mix : [];
+  const mixes = mixIds.map((id) => mixCat.options.find((o) => o.id === id)).filter(Boolean);
+  const realMixes = mixes.filter((m) => !m.id.startsWith("none"));
 
-  const mixTags = (mix && mix.tags) || [];
+  const allOpts = [base, aroma, finish, ...mixes].filter(Boolean);
+  const tags = new Set();
+  allOpts.forEach((o) => (o.tags || []).forEach((t) => tags.add(t)));
+
+  const mixHasTag = (t) => realMixes.some((m) => (m.tags || []).includes(t));
+  const hasMix = (id) => realMixes.some((m) => m.id === id);
   const finishTags = (finish && finish.tags) || [];
   const aromaTags = (aroma && aroma.tags) || [];
-  const savoryMix = mixTags.includes("savory") || mixTags.includes("salty");
+  const savoryMix = mixHasTag("savory") || mixHasTag("salty");
   const savoryFinish = finishTags.includes("savory") || finishTags.includes("salty");
   const sugarFinish = finishTags.includes("sugar");
-  const sweetMix = mixTags.includes("sweet");
+  const sweetMix = mixHasTag("sweet");
   const herbAroma = aromaTags.includes("herb");
-  const bacon = mix && mix.id === "bacon";
   const maple = (aroma && aroma.id === "maple") || (finish && finish.id === "mapleicing");
+  const ctx = { base, aroma, finish, hasMix };
+  const sweetMixLabel = () => realMixes.filter((m) => (m.tags || []).includes("sweet")).map((m) => m.label).join("・");
+  const savoryMixLabel = () => realMixes.filter((m) => (m.tags || []).includes("savory") || (m.tags || []).includes("salty")).map((m) => m.label).join("・");
+
+  // --- 鉄板（個別推し文）を最優先で判定 ---
+  const sig = signatureCombos.find((c) => c.when(ctx));
+  if (sig) {
+    return { verdict: "signature", headline: "鉄板の組み合わせ", direction: sig.text + " " + sceneProposals[sig.scene] };
+  }
 
   // --- NG判定：ハーブ香り × 甘い具材／砂糖系仕上げ ---
   if (herbAroma && (sweetMix || sugarFinish)) {
-    const clash = sweetMix ? `${mix.label}の甘さ` : `${finish.label}の甘さ`;
+    const clash = sweetMix ? `${sweetMixLabel()}の甘さ` : `${finish.label}の甘さ`;
     return {
       verdict: "ng",
       headline: `${aroma.label}のハーブ香と、${clash}がぶつかります`,
@@ -1279,18 +1348,18 @@ function evaluateBuilder(mission) {
     };
   }
 
-  // --- NG判定：塩系具材 × 砂糖系仕上げ（ベーコン×メープル例外を除く） ---
-  if (savoryMix && sugarFinish && !(bacon && maple)) {
+  // --- NG判定：塩系具材 × 砂糖系仕上げ（甘い具材が同居する甘じょっぱは除く） ---
+  if (savoryMix && sugarFinish && !sweetMix) {
     return {
       verdict: "ng",
-      headline: `${mix.label}の塩気と、${finish.label}の甘さがぶつかります`,
-      direction: `この組み合わせは一般的ではありません。理由：${mix.label}の塩気・コクに${finish.label}の砂糖の甘さが正面からぶつかり、味がまとまりにくいためです。塩系の具材は「そのまま」「塗り卵」「岩塩」で仕上げると素直にまとまります。`
+      headline: `${savoryMixLabel()}の塩気と、${finish.label}の甘さがぶつかります`,
+      direction: `この組み合わせは一般的ではありません。理由：${savoryMixLabel()}の塩気・コクに${finish.label}の砂糖の甘さが正面からぶつかり、味がまとまりにくいためです。塩系の具材は「そのまま」「塗り卵」「岩塩」で仕上げると素直にまとまります。`
     };
   }
 
   // --- 鉄板：ハーブ香り × 塩系具材／塩系仕上げ（セイボリーの王道） ---
   if (herbAroma && (savoryMix || savoryFinish)) {
-    const partner = savoryMix ? mix.label : finish.label;
+    const partner = savoryMix ? savoryMixLabel() : finish.label;
     return {
       verdict: "signature",
       headline: "セイボリーの鉄板",
@@ -1298,10 +1367,13 @@ function evaluateBuilder(mission) {
     };
   }
 
-  // --- 鉄板の個別推し文 ---
-  const sig = signatureCombos.find((c) => c.when(base, mix, aroma, finish));
-  if (sig) {
-    return { verdict: "signature", headline: "鉄板の組み合わせ", direction: sig.text + " " + sceneProposals[sig.scene] };
+  // --- 甘い具材 × 塩系具材：甘じょっぱとして成立 ---
+  if (sweetMix && savoryMix) {
+    return {
+      verdict: "signature",
+      headline: "甘じょっぱの組み合わせ",
+      direction: `${sweetMixLabel()}の甘さと${savoryMixLabel()}の塩気が引き立て合う、甘じょっぱの方向です。 ${sceneProposals.breakfast}`
+    };
   }
 
   // --- 全粒粉 × 繊細な香り（レモン/紅茶/オレンジ/柚子）：香りが負けやすい注意 ---
@@ -1313,7 +1385,7 @@ function evaluateBuilder(mission) {
     headline = "成立するが、ひと工夫ほしい";
     note = "全粒粉の香ばしさに、繊細な香りが負けやすいです。香りを少し多めにするか、ベースを薄力粉にすると香りが立ちます。";
   }
-  const flavors = opts.map((o) => o && o.flavor).filter(Boolean);
+  const flavors = allOpts.map((o) => o.flavor).filter(Boolean);
   const flavorLine = flavors.length ? `${flavors.join("、")}を組み合わせます。` : "";
   return { verdict: "ok", headline, direction: `${sceneProposals[scene]} ${flavorLine}${note}`.trim() };
 }
