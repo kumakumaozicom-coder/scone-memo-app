@@ -985,7 +985,17 @@ function goBack() {
     return;
   }
 
-  if (stage.type === "mission") return;
+  if (stage.type === "mission") {
+    const mission = stage.mission.missions[missionActiveIndex];
+    if (mission.type === "cards") {
+      delete missionSelections.card;
+    } else {
+      mission.categories.forEach((cat) => delete missionSelections[cat.key]);
+    }
+    renderApp();
+    lessonArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
 
   if (answered) {
     selectedChoices.clear();
@@ -1079,6 +1089,8 @@ function renderMissionStage(stage) {
     showMissionReaction(mission);
     nextButton.classList.remove("is-hidden");
     nextButton.textContent = mission.type === "cards" ? "この食べ方で案内する" : "今日の試作メモへ";
+    backButton.disabled = false;
+    backButton.textContent = "選び直す";
   }
 }
 
