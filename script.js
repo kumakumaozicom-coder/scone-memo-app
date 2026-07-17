@@ -617,6 +617,20 @@ const stages = [
                 { id: "whitechoco", label: "ホワイトチョコ", tags: ["sweet", "milky", "choco"], flavor: "ミルキーな甘さ", caution: "溶けやすいので大きめに", checkpoint: "溶け出しと甘さの強さ" },
                 { id: "sweetpotato", label: "さつまいも", tags: ["sweet", "wa"], flavor: "ほくほくの自然な甘さ", caution: "水分が出やすい。角切りで軽く乾かす", checkpoint: "生地の水っぽさ" },
                 { id: "chestnut", label: "栗（甘露煮）", tags: ["sweet", "wa"], flavor: "上品な甘さとほっくり食感", caution: "シロップを切ってから入れる", checkpoint: "生地のゆるみと甘さ" },
+                { id: "almond", label: "アーモンド", tags: ["roast", "nutty"], flavor: "香ばしさとカリッと食感", caution: "ローストして使う", checkpoint: "香ばしさと食感" },
+                { id: "pecan", label: "ピーカンナッツ", tags: ["roast", "nutty"], flavor: "やわらかな香ばしさと甘み", caution: "刻みすぎない", checkpoint: "香ばしさとコク" },
+                { id: "hazelnut", label: "ヘーゼルナッツ", tags: ["roast", "nutty"], flavor: "濃厚な香ばしさ", caution: "皮ごとローストして使う", checkpoint: "香りの深さ" },
+                { id: "strawberry", label: "ドライいちご", tags: ["fruit", "berry"], flavor: "甘酸っぱさと彩り", caution: "湿気で色移りしやすい", checkpoint: "色移りと食感" },
+                { id: "mango", label: "ドライマンゴー", tags: ["fruit"], flavor: "南国らしい濃い甘み", caution: "かたいので細かく刻む", checkpoint: "食感と甘みの強さ" },
+                { id: "orangepeelmix", label: "オレンジピール（具材）", tags: ["fruit", "citrus"], flavor: "ほろ苦い柑橘の甘み", caution: "刻んで散らす", checkpoint: "苦みと甘みのバランス" },
+                { id: "ham", label: "生ハム", tags: ["savory", "salty"], flavor: "うま味と塩気", caution: "焼くと塩気が立つ。量は控えめ", checkpoint: "塩気の強さ" },
+                { id: "corn", label: "コーン", tags: ["savory"], flavor: "プチっとした甘みとうま味", caution: "水気をよく切る", checkpoint: "生地の水っぽさ" },
+                { id: "olive", label: "オリーブ", tags: ["savory", "salty"], flavor: "塩気と大人の風味", caution: "種を抜き、水気を切る", checkpoint: "塩気と香りの主張" },
+                { id: "sausage", label: "ソーセージ", tags: ["savory", "salty"], flavor: "うま味とジューシーさ", caution: "水分・脂が出る。角切りで軽く焼く", checkpoint: "脂の出方とうま味" },
+                { id: "amanatto", label: "甘納豆", tags: ["sweet", "wa"], flavor: "和のやさしい甘さ", caution: "糖分が高いので入れすぎ注意", checkpoint: "甘さの強さ" },
+                { id: "chocchunk", label: "板チョコチャンク", tags: ["sweet", "choco"], flavor: "ごろっとした濃いチョコ感", caution: "大きめに割る。溶け崩れ注意", checkpoint: "溶け出しとチョコ感" },
+                { id: "pbchip", label: "ピーナッツバターチップ", tags: ["sweet", "nutty"], flavor: "コクのあるナッツの甘さ", caution: "溶けやすいので冷やしておく", checkpoint: "溶け具合とコク" },
+                { id: "caramelchip", label: "キャラメルチップ", tags: ["sweet", "caramel"], flavor: "香ばしい甘さ", caution: "焼成中に溶け落ちやすい", checkpoint: "溶け出しと焦げ" },
                 { id: "noneMix", label: "なし", tags: [], flavor: "", caution: "", checkpoint: "" }
               ]
             },
@@ -634,6 +648,16 @@ const stages = [
                 { id: "coffee", label: "コーヒー粉", tags: ["roast", "coffee"], flavor: "ほろ苦い深い香り", caution: "細挽きを少量。入れすぎは苦い", checkpoint: "苦みと香りのバランス" },
                 { id: "orange", label: "オレンジピール", tags: ["citrus"], flavor: "明るい柑橘の香り", caution: "刻んで散らす", checkpoint: "香りと甘さの重なり" },
                 { id: "blacksesame", label: "黒ごま", tags: ["wa", "roast", "nutty"], flavor: "香ばしい和の風味", caution: "軽く炒ると香りが立つ", checkpoint: "香ばしさとプチプチ食感" },
+                { id: "rosemary", label: "ローズマリー", tags: ["herb", "savory"], flavor: "すっきりした樹木系の香り", caution: "細かく刻む。入れすぎは苦い", checkpoint: "香りの強さ" },
+                { id: "thyme", label: "タイム", tags: ["herb", "savory"], flavor: "上品なハーブの香り", caution: "枝を除いて葉だけ使う", checkpoint: "香りのなじみ" },
+                { id: "greenonion", label: "青ねぎ（小口）", tags: ["herb", "savory"], flavor: "さわやかな薬味の香り", caution: "水気を切る。焼き色に注意", checkpoint: "香りと生地の水っぽさ" },
+                { id: "basil", label: "バジル", tags: ["herb", "savory"], flavor: "甘く華やかなハーブの香り", caution: "乾燥は少量、フレッシュは刻む", checkpoint: "香りの飛び方" },
+                { id: "cardamom", label: "カルダモン", tags: ["spice", "adult"], flavor: "清涼感のあるスパイス", caution: "ごく少量で効く", checkpoint: "香りの強さ" },
+                { id: "ginger", label: "ジンジャー", tags: ["spice"], flavor: "ぴりっとした温かみ", caution: "すりおろしは水分に注意", checkpoint: "辛みと香りのバランス" },
+                { id: "nutmeg", label: "ナツメグ", tags: ["spice"], flavor: "甘く香ばしいスパイス", caution: "入れすぎると薬っぽい", checkpoint: "香りの強さ" },
+                { id: "kinako", label: "きなこ", tags: ["wa", "roast", "nutty"], flavor: "香ばしい大豆の風味", caution: "粉気が出るので水分を見る", checkpoint: "生地のまとまり" },
+                { id: "yuzu", label: "柚子皮", tags: ["citrus", "wa"], flavor: "上品な和柑橘の香り", caution: "白い部分は苦いので黄色だけ", checkpoint: "香りの立ち方" },
+                { id: "rum", label: "ラム酒（漬け）", tags: ["adult"], flavor: "大人の深い香り", caution: "具材に染ませて使う。子ども向け不可", checkpoint: "アルコールの飛び方" },
                 { id: "noneAroma", label: "なし", tags: [], flavor: "", caution: "", checkpoint: "" }
               ]
             },
@@ -647,7 +671,14 @@ const stages = [
                 { id: "eggwash", label: "塗り卵（つや焼き）", tags: ["neutral"], flavor: "つやと香ばしい焼き色", caution: "塗りすぎると垂れる。薄く均一に", checkpoint: "焼き色のムラ" },
                 { id: "zarame", label: "ザラメ", tags: ["sweet", "sugar"], flavor: "ザクっとした甘さ", caution: "焼成中に溶け落ちることがある", checkpoint: "食感と焦げ" },
                 { id: "salt", label: "岩塩ひとつまみ", tags: ["savory", "salty"], flavor: "味を引き締める塩気", caution: "ふりすぎると塩辛い", checkpoint: "塩気のバランス" },
-                { id: "mapleicing", label: "メープルアイシング", tags: ["sweet", "sugar", "roast"], flavor: "香ばしい甘さのコーティング", caution: "冷めてからかける", checkpoint: "固まり方と甘さ" }
+                { id: "mapleicing", label: "メープルアイシング", tags: ["sweet", "sugar", "roast"], flavor: "香ばしい甘さのコーティング", caution: "冷めてからかける", checkpoint: "固まり方と甘さ" },
+                { id: "saltbutter", label: "ゲランド塩バター", tags: ["savory", "salty"], flavor: "コクのある塩気とつや", caution: "焼きたてに塗る", checkpoint: "塩気とつや" },
+                { id: "parmesan", label: "パルメザン粉ふり", tags: ["savory", "salty"], flavor: "うま味と香ばしい焼き色", caution: "焼く直前にふる", checkpoint: "焦げとうま味" },
+                { id: "herbsalt", label: "ハーブソルト", tags: ["savory", "salty", "herb"], flavor: "香り高い塩気", caution: "ふりすぎ注意", checkpoint: "塩気と香りのバランス" },
+                { id: "cinnamonsugar", label: "シナモンシュガー", tags: ["sweet", "sugar", "spice"], flavor: "甘く香ばしいスパイス", caution: "湿気で溶けやすい", checkpoint: "甘さと香り" },
+                { id: "caramelsauce", label: "キャラメルソース", tags: ["sweet", "sugar", "caramel"], flavor: "とろりと濃い甘さ", caution: "かけすぎるとベタつく", checkpoint: "垂れ方と甘さ" },
+                { id: "whitechocotop", label: "ホワイトチョコがけ", tags: ["sweet", "sugar", "milky"], flavor: "ミルキーなつやと甘さ", caution: "溶かして薄くかける", checkpoint: "固まり方と甘さ" },
+                { id: "sesametop", label: "黒ごまトッピング", tags: ["wa", "roast", "nutty"], flavor: "香ばしさと見た目のアクセント", caution: "焼く前に軽く押さえる", checkpoint: "剥がれと香ばしさ" }
               ]
             }
           ]
@@ -1187,7 +1218,15 @@ const signatureCombos = [
   { when: (b, m, a) => m.id === "cranberry" && a.id === "orange",
     text: "クランベリーオレンジ。甘酸っぱさと柑橘の香りが軽やかに重なります。", scene: "tea" },
   { when: (b, m, a) => m.id === "blueberry" && a.id === "lemon",
-    text: "ブルーベリーレモン。さわやかな甘酸っぱさで、ブランチにも合います。", scene: "tea" }
+    text: "ブルーベリーレモン。さわやかな甘酸っぱさで、ブランチにも合います。", scene: "tea" },
+  { when: (b, m, a) => m.id === "pecan" && a.id === "maple",
+    text: "ピーカンメープル。やわらかな香ばしさに、甘い香りが重なる王道です。", scene: "coffee" },
+  { when: (b, m, a) => m.id === "raisin" && a.id === "rum",
+    text: "ラムレーズン。大人の深い香りが漂う、洋菓子の定番です。", scene: "adult" },
+  { when: (b, m, a) => m.id === "strawberry" && a.id === "vanilla",
+    text: "いちごミルク風。甘酸っぱさとやさしい甘い香りで、お子さまにも人気です。", scene: "kids" },
+  { when: (b, m, a) => m.id === "sweetpotato" && a.id === "cinnamon",
+    text: "さつまいもシナモン。秋らしいほくほくの甘さに、あたたかいスパイスが合います。", scene: "gift" }
 ];
 
 const sceneProposals = {
@@ -1195,16 +1234,17 @@ const sceneProposals = {
   tea: "紅茶に合います。「柑橘やベリーの香りが、紅茶とよく合いますよ」と案内できます。",
   gift: "手土産向けです。「和の風味で上品なので、手土産にも喜ばれますよ」と提案できます。",
   kids: "お子さま向けです。「甘くて食べやすいので、お子さまにも人気です」と案内できます。",
-  breakfast: "朝食・軽食向けです。「食事系なので、朝ごはんやランチにも合いますよ」と提案できます。"
+  breakfast: "朝食・軽食向けです。「食事系なので、朝ごはんやランチにも合いますよ」と提案できます。",
+  adult: "大人向けです。「お酒やスパイスの香りで、コーヒーや紅茶とゆっくり楽しめます」と提案できます。"
 };
 
-function detectScene(tags, mix, aroma) {
+function detectScene(tags) {
   const has = (t) => tags.has(t);
-  const savory = has("savory") || has("salty");
-  const wa = has("wa");
+  const savory = has("savory") || has("salty") || has("herb");
   const sweet = has("sweet");
+  if (has("adult")) return "adult";
   if (savory && !sweet) return "breakfast";
-  if (wa) return "gift";
+  if (has("wa")) return "gift";
   if ((has("choco") || has("milky")) && (has("milky") || has("berry") || has("fruit"))) return "kids";
   if (has("tea") || has("citrus") || has("berry")) return "tea";
   if (has("roast") || has("coffee") || has("nutty") || has("choco")) return "coffee";
@@ -1220,10 +1260,24 @@ function evaluateBuilder(mission) {
 
   const mixTags = (mix && mix.tags) || [];
   const finishTags = (finish && finish.tags) || [];
+  const aromaTags = (aroma && aroma.tags) || [];
   const savoryMix = mixTags.includes("savory") || mixTags.includes("salty");
+  const savoryFinish = finishTags.includes("savory") || finishTags.includes("salty");
   const sugarFinish = finishTags.includes("sugar");
+  const sweetMix = mixTags.includes("sweet");
+  const herbAroma = aromaTags.includes("herb");
   const bacon = mix && mix.id === "bacon";
   const maple = (aroma && aroma.id === "maple") || (finish && finish.id === "mapleicing");
+
+  // --- NG判定：ハーブ香り × 甘い具材／砂糖系仕上げ ---
+  if (herbAroma && (sweetMix || sugarFinish)) {
+    const clash = sweetMix ? `${mix.label}の甘さ` : `${finish.label}の甘さ`;
+    return {
+      verdict: "ng",
+      headline: `${aroma.label}のハーブ香と、${clash}がぶつかります`,
+      direction: `この組み合わせは一般的ではありません。理由：${aroma.label}の青くさわやかなハーブの香りと甘い味は方向が逆で、ぶつかりやすいためです。ハーブはチーズ・ベーコン・生ハムなど塩系の具材と合わせると活きます。`
+    };
+  }
 
   // --- NG判定：塩系具材 × 砂糖系仕上げ（ベーコン×メープル例外を除く） ---
   if (savoryMix && sugarFinish && !(bacon && maple)) {
@@ -1234,15 +1288,25 @@ function evaluateBuilder(mission) {
     };
   }
 
+  // --- 鉄板：ハーブ香り × 塩系具材／塩系仕上げ（セイボリーの王道） ---
+  if (herbAroma && (savoryMix || savoryFinish)) {
+    const partner = savoryMix ? mix.label : finish.label;
+    return {
+      verdict: "signature",
+      headline: "セイボリーの鉄板",
+      direction: `${aroma.label}の香りと${partner}の塩気・うま味が引き立て合う、セイボリー（食事系）の王道です。 ${sceneProposals.breakfast}`
+    };
+  }
+
   // --- 鉄板の個別推し文 ---
   const sig = signatureCombos.find((c) => c.when(base, mix, aroma, finish));
   if (sig) {
     return { verdict: "signature", headline: "鉄板の組み合わせ", direction: sig.text + " " + sceneProposals[sig.scene] };
   }
 
-  // --- 全粒粉 × 繊細な香り（レモン/紅茶/オレンジ）：香りが負けやすい注意 ---
-  const delicateAroma = aroma && ["lemon", "earlgrey", "orange"].includes(aroma.id);
-  const scene = detectScene(tags, mix, aroma);
+  // --- 全粒粉 × 繊細な香り（レモン/紅茶/オレンジ/柚子）：香りが負けやすい注意 ---
+  const delicateAroma = aroma && ["lemon", "earlgrey", "orange", "yuzu"].includes(aroma.id);
+  const scene = detectScene(tags);
   let headline = "成立する組み合わせ";
   let note = "";
   if (base && base.id === "wheat" && delicateAroma) {
