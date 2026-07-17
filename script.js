@@ -102,7 +102,7 @@ const stageDetails = {
     next: "生地を冷やし、同じ厚みで焼き比べる。"
   },
   "水分と生地の硬さ": {
-    desc: "粉々、押せばまとまる、ベタつくを言葉にする。",
+    desc: "粉っぽい、押せばまとまる、ベタつくを言葉にする。",
     difficulty: "基礎+",
     tag: "手触り",
     avatar: "水分キャラ",
@@ -223,15 +223,15 @@ const stages = [
     image: "ここに全粒粉キャラ",
     supportImage: "ここに全粒粉の割合イラスト",
     memo: "全粒粉は10％、30％、50％で印象が変わります。増やしたら水分も見ます。",
-    support: "材料変更メモの全粒粉ルールです。30％以上で水分が少ないと、粉々になりやすい条件として見ます。",
+    support: "材料変更メモの全粒粉ルールです。30％以上で水分が少ないと、生地がまとまりにくい条件として見ます。",
     questions: [
       {
         text: "全粒粉30％以上で水分が少ない時、起きやすいことは？",
         hint: "生地のまとまりに注目します。",
-        choices: ["押してもまとまらずバラバラ崩れる", "折る時に生地が割れやすい", "ふくらみやすくなる", "粉が水分を吸いきれていない"],
+        choices: ["生地がまとまらない", "折る時に生地が割れやすい", "ふくらみやすくなる", "粉が水分を吸いきれていない"],
         answers: [0, 1, 3],
         feedback: {
-          correct: "正解です。全粒粉が多くて水分が少ない時は、粉々になりやすいところを見ます。",
+          correct: "正解です。全粒粉が多くて水分が少ない時は、生地がまとまらない方向に出ます。",
           close: "おしい！ ふくらみよりも、まずまとまり方と吸水を見ます。",
           wrong: "全粒粉を増やすと、香りだけでなく水分の足りなさが出やすいです。"
         },
@@ -332,8 +332,8 @@ const stages = [
     title: "水分と生地の硬さ",
     image: "ここに生地キャラ",
     supportImage: "ここにまとまりイラスト",
-    memo: "粉々、押せばまとまる、ベタつく。この3つの言葉で生地を見ます。",
-    support: "材料変更メモの水分と生地の硬さです。水分が少ないと粉々、多いと横流れの方向で見ます。",
+    memo: "粉っぽい、押せばまとまる、ベタつく。この3つの言葉で生地を見ます。",
+    support: "材料変更メモの水分と生地の硬さです。水分が少ないと粉っぽく、多いと横に流れる方向で見ます。",
     questions: [
       {
         text: "液体を入れて台に出した時、生地がまとまらない。いちばん先に見るところは？",
@@ -585,52 +585,69 @@ const stages = [
           id: "coffee",
           type: "builder",
           navLabel: "ミッション1",
-          title: "コーヒーに合うスコーンを組み立てよう",
-          brief: "ベース・具材・香り・仕上げを1つずつ選ぶと、試作メモができます。",
-          angleNote: "香ばしさと深みでコーヒーに合わせます。会計時は「コーヒーに合います」の一言で提案できます。",
+          title: "スコーンを組み立てて、方向を確かめよう",
+          brief: "ベース・具材・香り・仕上げを1つずつ選ぶと、相性の判定と試作メモができます。",
+          angleNote: "選んだ組み合わせから、合う場面と相性を確かめます。",
           categories: [
             {
               key: "base",
               label: "ベース（粉）",
               options: [
-                { id: "plain", label: "薄力粉", flavor: "軽い口どけ", caution: "まとまりやすいが物足りなさが出ることがある", checkpoint: "口どけと軽さ" },
-                { id: "medium", label: "中力粉", flavor: "ほどよい歯ごたえとしっとり感", caution: "混ぜすぎると重くなりやすい", checkpoint: "歯ごたえとしっとり感" },
-                { id: "strong", label: "強力粉", flavor: "しっかりした噛みごたえ", caution: "混ぜすぎると硬くなりやすい", checkpoint: "硬さと噛みごたえ" },
-                { id: "wheat", label: "全粒粉", flavor: "香ばしさ", caution: "水分を吸いやすく生地がまとまりにくい", checkpoint: "生地の硬さと吸水" }
+                { id: "plain", label: "薄力粉", tags: ["light"], flavor: "軽い口どけ", caution: "まとまりやすいが物足りなさが出ることがある", checkpoint: "口どけと軽さ" },
+                { id: "medium", label: "中力粉", tags: ["neutral"], flavor: "ほどよい歯ごたえとしっとり感", caution: "混ぜすぎると重くなりやすい", checkpoint: "歯ごたえとしっとり感" },
+                { id: "strong", label: "強力粉", tags: ["neutral"], flavor: "しっかりした噛みごたえ", caution: "混ぜすぎると硬くなりやすい", checkpoint: "硬さと噛みごたえ" },
+                { id: "wheat", label: "全粒粉", tags: ["roast", "nutty"], flavor: "香ばしさ", caution: "水分を吸いやすく生地がまとまりにくい。繊細な香りは負けやすい", checkpoint: "生地の硬さと吸水" }
               ]
             },
             {
               key: "mix",
               label: "具材",
               options: [
-                { id: "walnut", label: "くるみ", flavor: "香ばしさと食感", caution: "刻みすぎない。油分でベタつき注意", checkpoint: "焼成後の香ばしさと、油戻り（時間が経って油がにじむこと）" },
-                { id: "choco", label: "チョコチップ", flavor: "コクと甘さ", caution: "生地温度が上がると溶け崩れやすい", checkpoint: "チョコの溶け出し方" },
-                { id: "raisin", label: "レーズン", flavor: "自然な甘みと酸味", caution: "水分を含み生地がゆるくなりやすい", checkpoint: "生地のベタつき" },
-                { id: "cheese", label: "チェダーチーズ", flavor: "塩気とコク", caution: "焼成中に溶け出て広がりやすい", checkpoint: "チーズの溶け出し方と焼き色" },
-                { id: "blueberry", label: "冷凍ブルーベリー", flavor: "みずみずしい甘酸っぱさ", caution: "凍ったまま入れる。つぶすと色移りする", checkpoint: "生地の水っぽさと色移り" },
-                { id: "cranberry", label: "ドライクランベリー", flavor: "甘酸っぱさと彩り", caution: "乾きすぎは前もって湯でもどす", checkpoint: "食感とパサつき" },
-                { id: "noneMix", label: "なし", flavor: "", caution: "", checkpoint: "" }
+                { id: "walnut", label: "くるみ", tags: ["roast", "nutty"], flavor: "香ばしさと食感", caution: "刻みすぎない。油分でベタつき注意", checkpoint: "焼成後の香ばしさと、油戻り（時間が経って油がにじむこと）" },
+                { id: "choco", label: "チョコチップ", tags: ["sweet", "choco"], flavor: "コクと甘さ", caution: "生地温度が上がると溶け崩れやすい", checkpoint: "チョコの溶け出し方" },
+                { id: "raisin", label: "レーズン", tags: ["sweet", "fruit"], flavor: "自然な甘みと酸味", caution: "水分を含み生地がゆるくなりやすい", checkpoint: "生地のベタつき" },
+                { id: "cheese", label: "チェダーチーズ", tags: ["savory", "salty"], flavor: "塩気とコク", caution: "焼成中に溶け出て広がりやすい", checkpoint: "チーズの溶け出し方と焼き色" },
+                { id: "blueberry", label: "冷凍ブルーベリー", tags: ["fruit", "berry"], flavor: "みずみずしい甘酸っぱさ", caution: "凍ったまま入れる。つぶすと色移りする", checkpoint: "生地の水っぽさと色移り" },
+                { id: "cranberry", label: "ドライクランベリー", tags: ["fruit", "berry"], flavor: "甘酸っぱさと彩り", caution: "乾きすぎは前もって湯でもどす", checkpoint: "食感とパサつき" },
+                { id: "anko", label: "あんこ", tags: ["sweet", "wa"], flavor: "やさしい和の甘さ", caution: "水分が多く生地がゆるみやすい。入れすぎ注意", checkpoint: "生地のゆるみと甘さ" },
+                { id: "bacon", label: "ベーコン", tags: ["savory", "salty"], flavor: "塩気とうま味", caution: "水分・脂が出る。焼く前に軽く炒めておく", checkpoint: "脂の出方と塩気" },
+                { id: "fig", label: "ドライいちじく", tags: ["sweet", "fruit"], flavor: "上品な甘みとプチプチ食感", caution: "大きいものは刻む", checkpoint: "食感と甘みの残り方" },
+                { id: "apricot", label: "ドライアプリコット", tags: ["fruit"], flavor: "さわやかな甘酸っぱさ", caution: "刻んで散らす", checkpoint: "酸味のバランス" },
+                { id: "pistachio", label: "ピスタチオ", tags: ["roast", "nutty"], flavor: "華やかな香ばしさと彩り", caution: "塩なしを使う。刻みすぎない", checkpoint: "香ばしさと彩り" },
+                { id: "whitechoco", label: "ホワイトチョコ", tags: ["sweet", "milky", "choco"], flavor: "ミルキーな甘さ", caution: "溶けやすいので大きめに", checkpoint: "溶け出しと甘さの強さ" },
+                { id: "sweetpotato", label: "さつまいも", tags: ["sweet", "wa"], flavor: "ほくほくの自然な甘さ", caution: "水分が出やすい。角切りで軽く乾かす", checkpoint: "生地の水っぽさ" },
+                { id: "chestnut", label: "栗（甘露煮）", tags: ["sweet", "wa"], flavor: "上品な甘さとほっくり食感", caution: "シロップを切ってから入れる", checkpoint: "生地のゆるみと甘さ" },
+                { id: "noneMix", label: "なし", tags: [], flavor: "", caution: "", checkpoint: "" }
               ]
             },
             {
               key: "aroma",
               label: "香り",
               options: [
-                { id: "maple", label: "メープル", flavor: "深み", caution: "入れすぎると甘さが強くなる", checkpoint: "甘さと香りのバランス" },
-                { id: "cinnamon", label: "シナモン", flavor: "スパイスの香り", caution: "香りを足しすぎない", checkpoint: "香りの強さ" },
-                { id: "vanilla", label: "バニラ", flavor: "やさしい甘さ", caution: "風味が単調になりやすい", checkpoint: "味の輪郭" },
-                { id: "earlgrey", label: "紅茶（アールグレイ）", flavor: "華やかな香り", caution: "茶葉は細かくして入れる", checkpoint: "香りの出方と舌ざわり" },
-                { id: "lemon", label: "レモンの皮", flavor: "さわやかな酸味の香り", caution: "白い部分は苦いので黄色だけ", checkpoint: "香りの立ち方" },
-                { id: "noneAroma", label: "なし", flavor: "", caution: "", checkpoint: "" }
+                { id: "maple", label: "メープル", tags: ["sweet", "roast"], flavor: "深みのある甘い香り", caution: "入れすぎると甘さが強くなる", checkpoint: "甘さと香りのバランス" },
+                { id: "cinnamon", label: "シナモン", tags: ["spice"], flavor: "スパイスの香り", caution: "香りを足しすぎない", checkpoint: "香りの強さ" },
+                { id: "vanilla", label: "バニラ", tags: ["sweet", "milky"], flavor: "やさしい甘い香り", caution: "風味が単調になりやすい", checkpoint: "味の輪郭" },
+                { id: "earlgrey", label: "紅茶（アールグレイ）", tags: ["tea", "citrus"], flavor: "華やかな柑橘の香り", caution: "茶葉は細かくして入れる", checkpoint: "香りの出方と舌ざわり" },
+                { id: "lemon", label: "レモンの皮", tags: ["citrus"], flavor: "さわやかな酸味の香り", caution: "白い部分は苦いので黄色だけ", checkpoint: "香りの立ち方" },
+                { id: "matcha", label: "抹茶", tags: ["wa", "tea"], flavor: "ほろ苦い和の香り", caution: "焼成で色が飛びやすい。生地に均一に混ぜる", checkpoint: "色の残り方とほろ苦さ" },
+                { id: "hojicha", label: "ほうじ茶", tags: ["wa", "tea", "roast"], flavor: "香ばしい和の香り", caution: "細かく挽いて入れる", checkpoint: "香ばしさの出方" },
+                { id: "coffee", label: "コーヒー粉", tags: ["roast", "coffee"], flavor: "ほろ苦い深い香り", caution: "細挽きを少量。入れすぎは苦い", checkpoint: "苦みと香りのバランス" },
+                { id: "orange", label: "オレンジピール", tags: ["citrus"], flavor: "明るい柑橘の香り", caution: "刻んで散らす", checkpoint: "香りと甘さの重なり" },
+                { id: "blacksesame", label: "黒ごま", tags: ["wa", "roast", "nutty"], flavor: "香ばしい和の風味", caution: "軽く炒ると香りが立つ", checkpoint: "香ばしさとプチプチ食感" },
+                { id: "noneAroma", label: "なし", tags: [], flavor: "", caution: "", checkpoint: "" }
               ]
             },
             {
               key: "finish",
               label: "仕上げ",
               options: [
-                { id: "plainFinish", label: "そのまま", flavor: "素材の味を活かす", caution: "見た目が地味になりやすい", checkpoint: "焼き色と見た目" },
-                { id: "glaze", label: "グレーズ（砂糖がけ）", flavor: "つやと甘さ", caution: "かけすぎるとベタつく", checkpoint: "グレーズの固まり方" },
-                { id: "sugar", label: "粉糖", flavor: "軽い甘さと見た目", caution: "湿気で溶けやすい", checkpoint: "時間経過での粉糖の状態" }
+                { id: "plainFinish", label: "そのまま", tags: [], flavor: "素材の味を活かす", caution: "見た目が地味になりやすい", checkpoint: "焼き色と見た目" },
+                { id: "glaze", label: "グレーズ（砂糖がけ）", tags: ["sweet", "sugar"], flavor: "つやと甘さ", caution: "かけすぎるとベタつく", checkpoint: "グレーズの固まり方" },
+                { id: "sugar", label: "粉糖", tags: ["sweet", "sugar"], flavor: "軽い甘さと見た目", caution: "湿気で溶けやすい", checkpoint: "時間経過での粉糖の状態" },
+                { id: "eggwash", label: "塗り卵（つや焼き）", tags: ["neutral"], flavor: "つやと香ばしい焼き色", caution: "塗りすぎると垂れる。薄く均一に", checkpoint: "焼き色のムラ" },
+                { id: "zarame", label: "ザラメ", tags: ["sweet", "sugar"], flavor: "ザクっとした甘さ", caution: "焼成中に溶け落ちることがある", checkpoint: "食感と焦げ" },
+                { id: "salt", label: "岩塩ひとつまみ", tags: ["savory", "salty"], flavor: "味を引き締める塩気", caution: "ふりすぎると塩辛い", checkpoint: "塩気のバランス" },
+                { id: "mapleicing", label: "メープルアイシング", tags: ["sweet", "sugar", "roast"], flavor: "香ばしい甘さのコーティング", caution: "冷めてからかける", checkpoint: "固まり方と甘さ" }
               ]
             }
           ]
@@ -850,7 +867,12 @@ function checkAnswer() {
 
   answered = true;
   showAnswerMarks(answerSet);
-  showReaction(question, result);
+  showReaction(question, result, {
+    correctSelected: correctCount,
+    total: question.answers.length,
+    missed: missedCount,
+    extra: wrongCount
+  });
   playOnce(stageImageText, result === "correct" ? "anim-bounce" : "anim-shake");
   checkButton.classList.add("is-hidden");
   nextButton.classList.remove("is-hidden");
@@ -881,18 +903,22 @@ function showAnswerMarks(answerSet) {
   }).join("");
 }
 
-function showReaction(question, result) {
+function showReaction(question, result, counts) {
   const stage = stages[currentStageIndex];
   const detail = stageDetails[stage.title];
-  const labels = {
-    correct: ["正解寄り", "いい感じ！ 現場の見方に近いです"],
-    close: ["おしい", "そこも見るけど、もう1つ条件を足して見たいです"],
-    wrong: ["見るポイント", "それだけでは決めきれないです"]
-  };
+
+  let title = "不正解";
+  if (result === "correct") {
+    title = "正解";
+  } else if (result === "close") {
+    title = counts.missed > 0
+      ? `惜しい、あと${counts.missed}つ`
+      : `惜しい、不正解が${counts.extra}つ`;
+  }
 
   reactionCard.className = `reaction-card is-${result}`;
-  reactionBadge.textContent = labels[result][0];
-  reactionTitle.textContent = labels[result][1];
+  reactionBadge.textContent = `${counts.correctSelected}/${counts.total} 正解`;
+  reactionTitle.textContent = title;
   const correctLabels = question.answers.map((index) => `「${question.choices[index]}」`).join("");
   reactionText.textContent = result === "correct"
     ? question.feedback[result]
@@ -1136,21 +1162,103 @@ function getMissionSelectedOptions(mission) {
     .filter(Boolean);
 }
 
+// 代表的な鉄板組み合わせ（順にチェックし、最初に一致したものを採用）
+const signatureCombos = [
+  { when: (b, m, a) => b.id === "wheat" && m.id === "walnut" && a.id === "maple",
+    text: "香ばしさの黄金比。全粒粉のコクに、くるみとメープルが重なる王道です。", scene: "coffee" },
+  { when: (b, m, a, f) => m.id === "bacon" && (a.id === "maple" || f.id === "mapleicing"),
+    text: "甘じょっぱの海外定番。ベーコンの塩気にメープルの甘さが重なる、鉄板の組み合わせです。", scene: "breakfast" },
+  { when: (b, m, a) => m.id === "anko" && a.id === "matcha",
+    text: "和の鉄板。抹茶のほろ苦さに、あんこのやさしい甘さがよく合います。", scene: "gift" },
+  { when: (b, m, a) => m.id === "whitechoco" && a.id === "matcha",
+    text: "抹茶ホワイトチョコの定番。ほろ苦さとミルキーな甘さのバランスが人気です。", scene: "gift" },
+  { when: (b, m, a) => m.id === "cranberry" && a.id === "orange",
+    text: "クランベリーオレンジ。甘酸っぱさと柑橘の香りが軽やかに重なります。", scene: "tea" },
+  { when: (b, m, a) => m.id === "blueberry" && a.id === "lemon",
+    text: "ブルーベリーレモン。さわやかな甘酸っぱさで、ブランチにも合います。", scene: "tea" }
+];
+
+const sceneProposals = {
+  coffee: "コーヒーに合います。「香ばしいので、ブラックコーヒーと好相性ですよ」と提案できます。",
+  tea: "紅茶に合います。「柑橘やベリーの香りが、紅茶とよく合いますよ」と案内できます。",
+  gift: "手土産向けです。「和の風味で上品なので、手土産にも喜ばれますよ」と提案できます。",
+  kids: "お子さま向けです。「甘くて食べやすいので、お子さまにも人気です」と案内できます。",
+  breakfast: "朝食・軽食向けです。「食事系なので、朝ごはんやランチにも合いますよ」と提案できます。"
+};
+
+function detectScene(tags, mix, aroma) {
+  const has = (t) => tags.has(t);
+  const savory = has("savory") || has("salty");
+  const wa = has("wa");
+  const sweet = has("sweet");
+  if (savory && !sweet) return "breakfast";
+  if (wa) return "gift";
+  if ((has("choco") || has("milky")) && (has("milky") || has("berry") || has("fruit"))) return "kids";
+  if (has("tea") || has("citrus") || has("berry")) return "tea";
+  if (has("roast") || has("coffee") || has("nutty") || has("choco")) return "coffee";
+  return "coffee";
+}
+
+function evaluateBuilder(mission) {
+  const opts = mission.categories.map((cat) =>
+    cat.options.find((o) => o.id === missionSelections[cat.key]));
+  const [base, mix, aroma, finish] = opts;
+  const tags = new Set();
+  opts.forEach((o) => (o && o.tags ? o.tags : []).forEach((t) => tags.add(t)));
+
+  const mixTags = (mix && mix.tags) || [];
+  const finishTags = (finish && finish.tags) || [];
+  const savoryMix = mixTags.includes("savory") || mixTags.includes("salty");
+  const sugarFinish = finishTags.includes("sugar");
+  const bacon = mix && mix.id === "bacon";
+  const maple = (aroma && aroma.id === "maple") || (finish && finish.id === "mapleicing");
+
+  // --- NG判定：塩系具材 × 砂糖系仕上げ（ベーコン×メープル例外を除く） ---
+  if (savoryMix && sugarFinish && !(bacon && maple)) {
+    return {
+      verdict: "ng",
+      headline: `${mix.label}の塩気と、${finish.label}の甘さがぶつかります`,
+      direction: `この組み合わせは一般的ではありません。理由：${mix.label}の塩気・コクに${finish.label}の砂糖の甘さが正面からぶつかり、味がまとまりにくいためです。塩系の具材は「そのまま」「塗り卵」「岩塩」で仕上げると素直にまとまります。`
+    };
+  }
+
+  // --- 鉄板の個別推し文 ---
+  const sig = signatureCombos.find((c) => c.when(base, mix, aroma, finish));
+  if (sig) {
+    return { verdict: "signature", headline: "鉄板の組み合わせ", direction: sig.text + " " + sceneProposals[sig.scene] };
+  }
+
+  // --- 全粒粉 × 繊細な香り（レモン/紅茶/オレンジ）：香りが負けやすい注意 ---
+  const delicateAroma = aroma && ["lemon", "earlgrey", "orange"].includes(aroma.id);
+  const scene = detectScene(tags, mix, aroma);
+  let headline = "成立する組み合わせ";
+  let note = "";
+  if (base && base.id === "wheat" && delicateAroma) {
+    headline = "成立するが、ひと工夫ほしい";
+    note = "全粒粉の香ばしさに、繊細な香りが負けやすいです。香りを少し多めにするか、ベースを薄力粉にすると香りが立ちます。";
+  }
+  const flavors = opts.map((o) => o && o.flavor).filter(Boolean);
+  const flavorLine = flavors.length ? `${flavors.join("、")}を組み合わせます。` : "";
+  return { verdict: "ok", headline, direction: `${sceneProposals[scene]} ${flavorLine}${note}`.trim() };
+}
+
 function getMissionSummary(mission) {
   if (mission.type === "cards") {
     const card = mission.cards.find((c) => c.id === missionSelections.card);
-    if (!card) return { combo: "", direction: "", caution: "", checkpoint: "" };
-    return { combo: card.label, direction: card.direction, caution: card.caution, checkpoint: card.checkpoint };
+    if (!card) return { combo: "", direction: "", caution: "", checkpoint: "", verdict: "ok", headline: "" };
+    return { combo: card.label, direction: card.direction, caution: card.caution, checkpoint: card.checkpoint, verdict: "ok", headline: card.label };
   }
 
   const options = getMissionSelectedOptions(mission);
-  const flavors = options.map((option) => option.flavor).filter(Boolean);
   const cautions = options.map((option) => option.caution).filter(Boolean);
   const checkpoints = options.map((option) => option.checkpoint).filter(Boolean);
+  const evalResult = evaluateBuilder(mission);
 
   return {
     combo: options.map((option) => option.label).join("×"),
-    direction: `${mission.angleNote} ${flavors.join("、")}を組み合わせます。`,
+    verdict: evalResult.verdict,
+    headline: evalResult.headline,
+    direction: evalResult.direction,
     caution: cautions.length ? `${cautions.join("。")}。` : "特に大きな注意点はありません。",
     checkpoint: checkpoints.length ? checkpoints.join("、") : "焼き上がりの全体バランス"
   };
@@ -1158,13 +1266,22 @@ function getMissionSummary(mission) {
 
 function showMissionReaction(mission) {
   const summary = getMissionSummary(mission);
-  reactionCard.className = "reaction-card is-correct";
-  reactionBadge.textContent = mission.type === "cards" ? "案内の方向" : "試作の方向";
-  reactionTitle.textContent = summary.combo;
-  reactionText.textContent = mission.angleNote;
-  pointLabel.textContent = mission.type === "cards" ? "おすすめの食べ方" : "味の方向";
+  const stateClass = summary.verdict === "ng" ? "is-wrong" : summary.verdict === "ok" ? "is-close" : "is-correct";
+  const badgeText = mission.type === "cards"
+    ? "案内の方向"
+    : summary.verdict === "ng" ? "一般的ではない" : summary.verdict === "signature" ? "おすすめ" : "成立する";
+  const leadByVerdict = {
+    signature: "鉄板の組み合わせです。",
+    ok: `${summary.headline}です。`,
+    ng: "この組み合わせは一般的ではありません。"
+  };
+  reactionCard.className = `reaction-card ${stateClass}`;
+  reactionBadge.textContent = badgeText;
+  reactionTitle.textContent = mission.type === "cards" ? summary.combo : `${summary.combo}｜${summary.headline}`;
+  reactionText.textContent = mission.type === "cards" ? mission.angleNote : (leadByVerdict[summary.verdict] || "");
+  pointLabel.textContent = mission.type === "cards" ? "おすすめの食べ方" : "味の方向・合う場面";
   pointText.textContent = summary.direction;
-  reactionMemoLabel.textContent = "案内する時の注意";
+  reactionMemoLabel.textContent = "作る時の注意";
   reactionMemoText.textContent = summary.caution;
   reactionNextLabel.textContent = "次に見るところ";
   reactionNextText.textContent = summary.checkpoint;
@@ -1388,7 +1505,7 @@ function updateMatchFeedback(match, correctCount, wrongPairAnswers) {
   matchFeedbackSub.textContent = wrongPairAnswers.length
     ? `${correctCount}/${total} 正解\n正しいつなぎ：\n${wrongPairAnswers.join("\n")}`
     : `${correctCount}/${total} 正解`;
-  matchFeedback.classList.remove("is-hidden");
+  matchFeedback.className = `match-feedback is-${correctCount === total ? "correct" : correctCount > 0 ? "close" : "wrong"}`;
   matchFeedback.scrollIntoView({ behavior: "smooth", block: "center" });
   playOnce(matchFeedback, correctCount === total ? "anim-bounce" : "anim-shake");
 }
@@ -1537,7 +1654,7 @@ function checkOrder() {
   orderFeedbackSub.textContent = correctCount === total
     ? `${correctCount}/${total} 正解${noteLine}`
     : `${correctCount}/${total} 正解\n正しい順番：\n${order.steps.map((step, index) => `${index + 1}. ${step.label}`).join("\n")}${noteLine}`;
-  orderFeedback.classList.remove("is-hidden");
+  orderFeedback.className = `match-feedback is-${correctCount === total ? "correct" : correctCount > 0 ? "close" : "wrong"}`;
   orderFeedback.scrollIntoView({ behavior: "smooth", block: "center" });
   playOnce(orderFeedback, correctCount === total ? "anim-bounce" : "anim-shake");
 

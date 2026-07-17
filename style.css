@@ -634,6 +634,19 @@ h3 {
   text-align: center;
 }
 
+.match-feedback.is-correct {
+  border: 3px solid var(--accent);
+}
+
+.match-feedback.is-close {
+  border: 3px solid #8494b0;
+}
+
+.match-feedback.is-wrong {
+  border: 3px dashed var(--notice);
+  background: var(--notice-soft);
+}
+
 .match-feedback-line {
   margin-bottom: 2px;
   font-size: 15px;
@@ -769,15 +782,34 @@ h3 {
 }
 
 .reaction-card.is-correct {
-  border-top-color: var(--accent);
+  border: 3px solid var(--accent);
+  border-top: 8px solid var(--accent);
 }
 
 .reaction-card.is-close {
-  border-top-color: var(--honey);
+  border: 3px solid #8494b0;
+  border-top: 8px solid #8494b0;
 }
 
 .reaction-card.is-wrong {
-  border-top-color: var(--notice);
+  border: 3px dashed var(--notice);
+  border-top: 8px solid var(--notice);
+  background: var(--notice-soft);
+}
+
+.reaction-card.is-correct .reaction-badge {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.reaction-card.is-close .reaction-badge {
+  background: #8494b0;
+  color: #ffffff;
+}
+
+.reaction-card.is-wrong .reaction-badge {
+  background: var(--notice);
+  color: #ffffff;
 }
 
 .reaction-card h3,
